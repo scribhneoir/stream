@@ -41,7 +41,7 @@ class _EditPageState extends State<EditPage> {
                       RegExp('^(#{1}\\s)(.{1,})', multiLine: true):
                           TextModifier(TextStyle(
                         color: Theme.of(context).colorScheme.secondary,
-                        fontWeight: FontWeight(700),
+                        fontWeight: FontWeight.bold,
                       )),
                     }),
                   ))))
