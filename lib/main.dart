@@ -17,10 +17,21 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         title: 'Stream',
         theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+            colorScheme: ColorScheme.fromSeed(
+              seedColor: const Color(0xffd1bfb0),
+              background: const Color(0xff392b35),
+              primary: const Color(0xffd1bfb0),
+              secondary: const Color(0xff486b7f),
+              tertiary: const Color(0xff7a9c96),
+              error: const Color(0xffbb474f),
+              brightness: Brightness.dark,
+            ),
             useMaterial3: true,
-            textTheme: GoogleFonts.quicksandTextTheme()),
+            fontFamily: "Cozette"),
+        debugShowCheckedModeBanner: false,
+
         // home: const FlowPage(),
+
         home: const EditPage());
   }
 }

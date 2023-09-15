@@ -22,19 +22,29 @@ class _EditPageState extends State<EditPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: TextField(
-      autofocus: true,
-      keyboardType: TextInputType.multiline,
-      maxLines: null,
-      style: const TextStyle(fontSize: 20),
-      controller: RegexpStyleController({
-        RegExp('^(#{1}\\s)(.*)', multiLine: true): TextModifier(
-            const TextStyle(
-                color: Colors.green, decoration: TextDecoration.underline),
-            (String s) => "  ${s.substring(2)}"),
-        RegExp('^(#{2}\\s)(.*)', multiLine: true): TextModifier(const TextStyle(
-            color: Colors.blue, decoration: TextDecoration.underline)),
-      }),
-    ));
+        body: Column(children: [
+      Expanded(
+          flex: 1,
+          child: Center(
+              child: SizedBox(
+                  width: 800,
+                  child: TextField(
+                    decoration: const InputDecoration(
+                      border: InputBorder.none,
+                    ),
+                    autofocus: true,
+                    keyboardType: TextInputType.multiline,
+                    maxLines: null,
+                    expands: true,
+                    style: const TextStyle(fontSize: 20),
+                    controller: RegexpStyleController({
+                      RegExp('^(#{1}\\s)(.{1,})', multiLine: true):
+                          TextModifier(TextStyle(
+                        color: Theme.of(context).colorScheme.secondary,
+                        fontWeight: FontWeight(700),
+                      )),
+                    }),
+                  ))))
+    ]));
   }
 }

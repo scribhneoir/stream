@@ -1,11 +1,11 @@
 name: stream
 description: A minimalist and opinionated writing application
-publish_to: 'none'
+publish_to: "none"
 
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.1.1 <4.0.0'
+  sdk: ">=3.1.1 <4.0.0"
 
 dependencies:
   flutter:
@@ -21,3 +21,21 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  fonts:
+    - family: FiraCode
+      fonts:
+        - asset: assets/fonts/FiraCode/FiraCode.ttf
+    - family: Cozette
+      fonts:
+        - asset: assets/fonts/Cozette/Cozette-Regular.ttf
+          style: normal
+        - asset: assets/fonts/Cozette/Cozette-Bold.ttf
+          weight: 700
+    - family: Monoid
+      fonts:
+        - asset: assets/fonts/Monoid/Monoid-Regular.ttf
+          style: normal
+        - asset: assets/fonts/Monoid/Monoid-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Monoid/Monoid-Italic.ttf
+          style: italic
