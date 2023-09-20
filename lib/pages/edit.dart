@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import '../controllers/regexp.style.controller.dart';
 
@@ -26,12 +25,12 @@ class _EditPageState extends State<EditPage> {
       Expanded(
           flex: 1,
           child: Center(
-              child: SizedBox(
-                  width: 800,
+              child: Padding(
+                  padding: const EdgeInsets.all(20),
                   child: TextField(
                     decoration: const InputDecoration(
-                      border: InputBorder.none,
-                    ),
+                        border: InputBorder.none,
+                        contentPadding: EdgeInsets.all(10)),
                     autofocus: true,
                     keyboardType: TextInputType.multiline,
                     maxLines: null,
@@ -41,8 +40,31 @@ class _EditPageState extends State<EditPage> {
                       RegExp('^(#{1}\\s)(.{1,})', multiLine: true):
                           TextModifier(TextStyle(
                         color: Theme.of(context).colorScheme.secondary,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w700,
                       )),
+                      RegExp('^(#{2}\\s)(.{1,})', multiLine: true):
+                          TextModifier(TextStyle(
+                        color: Theme.of(context).colorScheme.tertiary,
+                        fontWeight: FontWeight.w600,
+                      )),
+                      RegExp('^(#{3}\\s)(.{1,})', multiLine: true):
+                          TextModifier(TextStyle(
+                        color: Theme.of(context).colorScheme.error,
+                        fontWeight: FontWeight.w500,
+                      )),
+                      RegExp('(\\*)+(\\S+)(\\*)+', multiLine: true):
+                          TextModifier(const TextStyle(
+                        fontWeight: FontWeight.w700,
+                      )),
+                      RegExp('(\\_)+(\\S+)(\\_)+', multiLine: true):
+                          TextModifier(
+                              const TextStyle(fontStyle: FontStyle.italic)),
+                      RegExp('(^(\\W{1})(\\s)(.*)(?:\$)?)+', multiLine: true):
+                          TextModifier(
+                              TextStyle(
+                                color: Theme.of(context).colorScheme.tertiary,
+                              ),
+                              (String s) => "•${s.substring(1)}"),
                     }),
                   ))))
     ]));

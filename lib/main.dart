@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:stream/pages/edit.dart';
-
-import 'pages/flow.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,15 +16,15 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
             colorScheme: ColorScheme.fromSeed(
               seedColor: const Color(0xffd1bfb0),
-              background: const Color(0xff392b35),
+              background: const Color(0xff292a2a),
               primary: const Color(0xffd1bfb0),
-              secondary: const Color(0xff486b7f),
-              tertiary: const Color(0xff7a9c96),
-              error: const Color(0xffbb474f),
+              secondary: const Color(0xff7b99c8),
+              tertiary: const Color(0xff508d76),
+              error: const Color(0xffbe7979),
               brightness: Brightness.dark,
             ),
             useMaterial3: true,
-            fontFamily: "Cozette"),
+            fontFamily: "FiraCode"),
         debugShowCheckedModeBanner: false,
 
         // home: const FlowPage(),

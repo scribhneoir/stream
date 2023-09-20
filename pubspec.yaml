@@ -24,7 +24,17 @@ flutter:
   fonts:
     - family: FiraCode
       fonts:
-        - asset: assets/fonts/FiraCode/FiraCode.ttf
+        - asset: assets/fonts/FiraCode/FiraCode-Regular.ttf
+          style: normal
+          weight: 500
+        - asset: assets/fonts/FiraCode/FiraCode-Light.ttf
+          weight: 300
+        - asset: assets/fonts/FiraCode/FiraCode-Medium.ttf
+          weight: 400
+        - asset: assets/fonts/FiraCode/FiraCode-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/FiraCode/FiraCode-Bold.ttf
+          weight: 700
     - family: Cozette
       fonts:
         - asset: assets/fonts/Cozette/Cozette-Regular.ttf
