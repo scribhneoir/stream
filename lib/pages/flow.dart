@@ -169,10 +169,21 @@ class _FlowPageState extends State<FlowPage> {
                   child: Padding(
                       padding: const EdgeInsets.fromLTRB(10, 2, 10, 2),
                       child: Text(
-                        _title == "" ? "untitled" : _title,
-                        style: Theme.of(context).textTheme.headlineMedium,
+                        _enterCount == 2
+                            ? "..."
+                            : _title == ""
+                                ? "untitled"
+                                : _title,
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineMedium
+                            ?.apply(
+                                color: _settingTitle
+                                    ? Theme.of(context).colorScheme.primary
+                                    : Theme.of(context).colorScheme.secondary),
                       ))),
               Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   ..._tags.asMap().entries.map((tag) {
                     return InkWell(
@@ -185,7 +196,8 @@ class _FlowPageState extends State<FlowPage> {
                         splashColor: Colors.white10, // Splash color over image
                         child: Text(
                           tag.value,
-                          style: Theme.of(context).textTheme.bodyLarge,
+                          style: Theme.of(context).textTheme.bodyLarge?.apply(
+                              color: Theme.of(context).colorScheme.tertiary),
                         ));
                   })
                 ],
@@ -194,8 +206,11 @@ class _FlowPageState extends State<FlowPage> {
                   shaderCallback: (bounds) {
                     return LinearGradient(
                             colors: [
-                          Colors.white.withOpacity(0.0),
-                          Colors.black,
+                          Theme.of(context)
+                              .colorScheme
+                              .background
+                              .withOpacity(0.0),
+                          Theme.of(context).colorScheme.primary,
                         ],
                             begin: FractionalOffset.topCenter,
                             end: const FractionalOffset(0.5, 0.5))
