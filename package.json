@@ -4,8 +4,8 @@
   "main": "expo-router/entry",
   "scripts": {
     "dev": "expo start",
-    "lint": "eslint .",
-    "format": "prettier --write .",
+    "lint": "eslint \"app/**/*.tsx\" --fix",
+    "format": "prettier --write \"app/**/*.tsx\"",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
@@ -50,6 +50,9 @@
     "prettier": "^3.2.5",
     "prettier-plugin-tailwindcss": "^0.5.12",
     "typescript": "^5.1.3"
+  },
+  "resolutions": {
+    "@typescript-eslint/typescript-estree": "^7.2.0"
   },
   "config": {
     "commitizen": {

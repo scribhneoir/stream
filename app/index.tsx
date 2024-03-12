@@ -1,10 +1,10 @@
 import '../global.css';
-import React from 'react';
-import { StatusBar } from 'expo-status-bar';
-import { View } from 'react-native';
-import { useFonts } from 'expo-font';
 import { MarkdownTextInput } from '@expensify/react-native-live-markdown';
+import { useFonts } from 'expo-font';
 import { LinearGradient } from 'expo-linear-gradient';
+import { StatusBar } from 'expo-status-bar';
+import React from 'react';
+import { View } from 'react-native';
 
 export default function App() {
   useFonts({
