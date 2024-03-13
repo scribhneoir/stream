@@ -1,4 +1,4 @@
-# Stream
+![stream](assets/logo.png)
 
 ## Description
 
