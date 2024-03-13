@@ -6,11 +6,13 @@ Stream is a simple note taking app designed for destractable people who just wan
 
 ## Manefesto
 
-- stream should be minimalistic
-- stream should discourage perfectionism
-- stream should assist in the consolidation and organization of ideas
-- stream should save data in an accessible and open standard
-- stream should streamline the sharing of ideas
+stream should...
+- be minimalistic
+- discourage perfectionism
+- assist in the consolidation and organization of ideas
+- save data in an accessible and open standard
+- streamline the sharing of ideas
+- accommodate for multiple platforms
 
 ## Development
 
