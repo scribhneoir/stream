@@ -2,13 +2,15 @@
 
 ## Description
 
-Stream is a minimalistic, cross platform, opinionated markdown note taking app.
+Stream is a simple note taking app designed for destractable people who just want to write.
 
 ## Manefesto
 
-- A writing app should be minimalistic
-- A writing app should discourage perfectionism
-- A writing app should assist in the consolidation and organization of ideas
+- stream should be minimalistic
+- stream should discourage perfectionism
+- stream should assist in the consolidation and organization of ideas
+- stream should save data in an accessible and open standard
+- stream should streamline the sharing of ideas
 
 ## Development
 
