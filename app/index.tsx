@@ -1,58 +1,10 @@
-import '../global.css';
-import { MarkdownTextInput } from '@expensify/react-native-live-markdown';
-import { useFonts } from 'expo-font';
-import { LinearGradient } from 'expo-linear-gradient';
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 
-export default function App() {
-  useFonts({
-    sp: require('../assets/fonts/SpaceMono/SpaceMono-Regular.ttf'),
-    spB: require('../assets/fonts/SpaceMono/SpaceMono-Bold.ttf'),
-    spI: require('../assets/fonts/SpaceMono/SpaceMono-Italic.ttf'),
-    spBI: require('../assets/fonts/SpaceMono/SpaceMono-BoldItalic.ttf'),
-  });
-
-  const [text, setText] = React.useState('');
-
+export default function Flow() {
   return (
-    <View className='relative flex h-full w-full items-center justify-start bg-black'>
-      <MarkdownTextInput
-        value={text}
-        onChangeText={t => setText(t)}
-        multiline
-        autoFocus
-        showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}
-        style={{
-          fontFamily: 'sp',
-          width: '90%',
-          maxHeight: '50%',
-          position: 'absolute',
-          bottom: '50%',
-          backgroundColor: 'black',
-          color: '#B8C2B9',
-          padding: 10,
-          fontSize: 20,
-          //web-only style props
-          // @ts-ignore
-          scrollbarWidth: 'none',
-          // @ts-ignore
-          outlineStyle: 'none',
-        }}
-      />
-      <LinearGradient
-        // Background Linear Gradient
-        colors={['black', 'transparent']}
-        locations={[0.5, 1]}
-        style={{
-          width: '90%',
-          height: '50%',
-          pointerEvents: 'none',
-        }}
-      />
-      <StatusBar style='auto' />
+    <View className='h-full w-full bg-black'>
+      <Text className='text-white'>Hello, World!</Text>
     </View>
   );
 }
