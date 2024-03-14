@@ -71,7 +71,7 @@ export default function App() {
                 zIndex: 10,
                 height: '100%',
                 overflow: 'hidden',
-                backgroundColor: '#374151',
+                backgroundColor: '#111211',
                 borderTopRightRadius: 10,
                 borderBottomRightRadius: 10,
               },
@@ -82,9 +82,9 @@ export default function App() {
                 onPress={toggleDrawer}
                 name='menu'
                 size={24}
-                color='white'
+                color='#B8C2B9'
               />
-              <Text style={{ color: 'white' }}>Drawer</Text>
+              <Text style={{ color: '#B8C2B9' }}>Drawer</Text>
             </View>
           </Animated.View>
           <View style={{ padding: 10, height: '100%', width: '100%' }}>
@@ -92,9 +92,8 @@ export default function App() {
               onPress={toggleDrawer}
               name='menu'
               size={24}
-              color='white'
+              color='#B8C2B9'
             />
-            <Text style={{ color: 'white' }}>Hello, World!</Text>
             <Slot />
           </View>
         </View>
