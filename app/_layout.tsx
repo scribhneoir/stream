@@ -87,7 +87,7 @@ export default function App() {
               <Text style={{ color: 'white' }}>Drawer</Text>
             </View>
           </Animated.View>
-          <View style={{ padding: 10 }}>
+          <View style={{ padding: 10, height: '100%', width: '100%' }}>
             <Entypo
               onPress={toggleDrawer}
               name='menu'
