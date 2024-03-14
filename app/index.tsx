@@ -45,7 +45,7 @@ export default function Flow() {
           width: '100%',
           color: '#B8C2B9',
           padding: 10,
-          fontSize: 30,
+          fontSize: 25,
           // @ts-ignore
           outlineStyle: 'none',
         }}
