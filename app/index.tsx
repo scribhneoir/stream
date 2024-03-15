@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 
 export default function Flow() {
+  const [reset, setReset] = useState(false);
   const [title, setTitle] = useState('');
   const [text, setText] = useState('');
   const [tags, setTags] = useState<string>('');
@@ -21,6 +22,7 @@ export default function Flow() {
   const ref_tags = useRef<TextInput>(null);
 
   const handleStateReset = () => {
+    setReset(true);
     setTitle('');
     setText('');
     setTags('');
@@ -58,7 +60,8 @@ export default function Flow() {
       } else if (tagInit) {
         setTagInit(false);
         if (e.nativeEvent.key !== ' ') {
-          setTags(tags + ' #');
+          setReset(true);
+          setTags(tags + ' #' + e.nativeEvent.key);
           setText(text.substring(0, text.length - 1));
           ref_tags.current?.focus();
         }
@@ -108,7 +111,6 @@ export default function Flow() {
         keyboardAppearance='dark'
         onChangeText={t => setTags(t)}
         returnKeyType='done'
-        autoFocus
         autoCorrect={false}
         autoComplete='off'
         spellCheck={false}
@@ -141,7 +143,6 @@ export default function Flow() {
         <TextInput
           value={text}
           keyboardAppearance='dark'
-          onChangeText={t => setText(t)}
           multiline
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
@@ -151,11 +152,16 @@ export default function Flow() {
           ref={ref_text}
           onKeyPress={e => handleTextKeyPress(e)}
           onChange={e => {
-            if (Platform.OS === 'web') {
-              // @ts-ignore
-              e.nativeEvent.target.style.height = 0;
-              // @ts-ignore
-              e.nativeEvent.target.style.height = `${e.nativeEvent.target.scrollHeight}px`;
+            if (!reset) {
+              setText(e.nativeEvent.text);
+              if (Platform.OS === 'web') {
+                // @ts-ignore
+                e.nativeEvent.target.style.height = 0;
+                // @ts-ignore
+                e.nativeEvent.target.style.height = `${e.nativeEvent.target.scrollHeight}px`;
+              }
+            } else {
+              setReset(false);
             }
           }}
           style={{
