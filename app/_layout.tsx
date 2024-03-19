@@ -3,7 +3,7 @@ import { useFonts } from 'expo-font';
 import { Slot } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { View, Text, Pressable } from 'react-native';
+import { View, Text, Pressable, Keyboard } from 'react-native';
 import Animated, {
   LinearTransition,
   ReduceMotion,
@@ -52,6 +52,9 @@ export default function App() {
           });
     })();
     setDrawerOpen(open);
+    if (!open) {
+      Keyboard.dismiss();
+    }
   };
 
   const animatedStyles = useAnimatedStyle(() => {
