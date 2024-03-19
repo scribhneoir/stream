@@ -99,7 +99,6 @@ export default function Flow() {
           fontFamily: 'spB',
           width: '100%',
           color: '#B8C2B9',
-          padding: 10,
           fontSize: 25,
           // @ts-ignore
           outlineStyle: 'none',
@@ -171,7 +170,6 @@ export default function Flow() {
             position: 'absolute',
             bottom: '50%',
             color: '#B8C2B9',
-            padding: 10,
             fontSize: 18,
             textAlignVertical: 'bottom',
             paddingTop: 0,
