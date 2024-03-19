@@ -3,7 +3,7 @@ import { useFonts } from 'expo-font';
 import { Slot } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { View, Text, Pressable, Keyboard, Image } from 'react-native';
+import { View, Text, Pressable, Keyboard, Image, Platform } from 'react-native';
 import Animated, {
   LinearTransition,
   ReduceMotion,
@@ -27,6 +27,20 @@ export default function App() {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const width = useSharedValue(0);
   const animatedRef = useAnimatedRef();
+
+  const test = async () => {
+    if (Platform.OS === 'web') {
+      // @ts-ignore
+      const dirHandle = await window.showDirectoryPicker({
+        id: 'pool',
+        mode: 'readwrite',
+        startIn: 'documents',
+      });
+      for await (const entry of dirHandle.values()) {
+        console.log(entry.kind, entry.name);
+      }
+    }
+  };
 
   const toggleDrawer = (open: boolean) => {
     runOnUI(() => {
@@ -55,6 +69,7 @@ export default function App() {
     if (!open) {
       Keyboard.dismiss();
     }
+    test();
   };
 
   const animatedStyles = useAnimatedStyle(() => {
