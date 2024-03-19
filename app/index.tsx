@@ -94,15 +94,24 @@ export default function Flow() {
         onSubmitEditing={() =>
           title ? ref_text.current?.focus() : ref_title.current?.focus()
         }
-        style={{
-          backgroundColor: 'black',
-          fontFamily: 'spB',
-          width: '100%',
-          color: '#B8C2B9',
-          fontSize: 25,
-          // @ts-ignore
-          outlineStyle: 'none',
-        }}
+        style={[
+          {
+            backgroundColor: 'black',
+            fontFamily: 'spB',
+            width: '100%',
+            color: '#B8C2B9',
+            fontSize: 25,
+          },
+          Platform.OS === 'web'
+            ? {
+                //web-only style props
+                // @ts-ignore
+                scrollbarWidth: 'none',
+                // @ts-ignore
+                outlineStyle: 'none',
+              }
+            : {},
+        ]}
       />
       <TextInput
         value={tags}
@@ -116,15 +125,24 @@ export default function Flow() {
         onSubmitEditing={() =>
           title ? ref_text.current?.focus() : ref_title.current?.focus()
         }
-        style={{
-          backgroundColor: 'black',
-          fontFamily: 'spB',
-          width: '100%',
-          color: '#353835',
-          fontSize: 14,
-          // @ts-ignore
-          outlineStyle: 'none',
-        }}
+        style={[
+          {
+            backgroundColor: 'black',
+            fontFamily: 'spB',
+            width: '100%',
+            color: '#353835',
+            fontSize: 14,
+          },
+          Platform.OS === 'web'
+            ? {
+                //web-only style props
+                // @ts-ignore
+                scrollbarWidth: 'none',
+                // @ts-ignore
+                outlineStyle: 'none',
+              }
+            : {},
+        ]}
       />
       <Pressable
         style={{
@@ -163,23 +181,29 @@ export default function Flow() {
               setReset(false);
             }
           }}
-          style={{
-            fontFamily: 'sp',
-            width: '100%',
-            maxHeight: '100%',
-            position: 'absolute',
-            bottom: '50%',
-            color: '#B8C2B9',
-            fontSize: 18,
-            textAlignVertical: 'bottom',
-            paddingTop: 0,
-            paddingBottom: 0,
-            //web-only style props
-            // @ts-ignore
-            scrollbarWidth: 'none',
-            // @ts-ignore
-            outlineStyle: 'none',
-          }}
+          style={[
+            {
+              fontFamily: 'sp',
+              width: '100%',
+              maxHeight: '100%',
+              position: 'absolute',
+              bottom: '50%',
+              color: '#B8C2B9',
+              fontSize: 18,
+              textAlignVertical: 'bottom',
+              paddingTop: 0,
+              paddingBottom: 0,
+            },
+            Platform.OS === 'web'
+              ? {
+                  //web-only style props
+                  // @ts-ignore
+                  scrollbarWidth: 'none',
+                  // @ts-ignore
+                  outlineStyle: 'none',
+                }
+              : {},
+          ]}
         />
         <LinearGradient
           colors={['black', 'transparent']}
