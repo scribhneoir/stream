@@ -17,7 +17,7 @@ import Animated, {
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function App() {
-  useFonts({
+  const [fontsLoaded] = useFonts({
     sp: require('../assets/fonts/SpaceMono/SpaceMono-Regular.ttf'),
     spB: require('../assets/fonts/SpaceMono/SpaceMono-Bold.ttf'),
     spI: require('../assets/fonts/SpaceMono/SpaceMono-Italic.ttf'),
@@ -59,6 +59,10 @@ export default function App() {
       width: width.value,
     };
   });
+
+  if (!fontsLoaded) {
+    return null;
+  }
 
   return (
     <View style={{ backgroundColor: 'black', height: '100%', width: '100%' }}>
