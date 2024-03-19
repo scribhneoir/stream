@@ -30,7 +30,12 @@
       [
         "expo-font",
         {
-          "fonts": ["./assets/fonts/Inter-Black.otf"]
+          "fonts": [
+            "./assets/fonts/SpaceMono/SpaceMono-Bold.ttf",
+            "./assets/fonts/SpaceMono/SpaceMono-BoldItalic.ttf",
+            "./assets/fonts/SpaceMono/SpaceMono-Italic.ttf",
+            "./assets/fonts/SpaceMono/SpaceMono-Regular.ttf"
+          ]
         }
       ],
       "expo-router"

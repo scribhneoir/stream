@@ -1,8 +1,9 @@
 import { Entypo, FontAwesome } from '@expo/vector-icons';
 import { useFonts } from 'expo-font';
 import { Slot } from 'expo-router';
+import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { View, Text, Pressable, Keyboard, Image, Platform } from 'react-native';
 import Animated, {
   LinearTransition,
@@ -16,13 +17,21 @@ import Animated, {
 } from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+SplashScreen.preventAutoHideAsync();
+
 export default function App() {
-  const [fontsLoaded] = useFonts({
+  const [fontsLoaded, fontError] = useFonts({
     sp: require('../assets/fonts/SpaceMono/SpaceMono-Regular.ttf'),
     spB: require('../assets/fonts/SpaceMono/SpaceMono-Bold.ttf'),
     spI: require('../assets/fonts/SpaceMono/SpaceMono-Italic.ttf'),
     spBI: require('../assets/fonts/SpaceMono/SpaceMono-BoldItalic.ttf'),
   });
+
+  const onLayoutRootView = useCallback(async () => {
+    if (fontsLoaded || fontError) {
+      await SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded, fontError]);
 
   const [drawerOpen, setDrawerOpen] = useState(false);
   const width = useSharedValue(0);
@@ -78,12 +87,15 @@ export default function App() {
     };
   });
 
-  if (!fontsLoaded) {
+  if (!fontsLoaded && !fontError) {
     return null;
   }
 
   return (
-    <View style={{ backgroundColor: 'black', height: '100%', width: '100%' }}>
+    <View
+      style={{ backgroundColor: 'black', height: '100%', width: '100%' }}
+      onLayout={onLayoutRootView}
+    >
       <SafeAreaView
         style={{ position: 'relative', height: '100%', width: '100%' }}
       >
