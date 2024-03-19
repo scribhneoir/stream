@@ -3,7 +3,7 @@ import { useFonts } from 'expo-font';
 import { Slot } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { View, Text, Pressable, Keyboard } from 'react-native';
+import { View, Text, Pressable, Keyboard, Image } from 'react-native';
 import Animated, {
   LinearTransition,
   ReduceMotion,
@@ -96,6 +96,8 @@ export default function App() {
           >
             <View
               style={{
+                borderTopRightRadius: 10,
+                borderBottomRightRadius: 10,
                 height: '100%',
                 paddingTop: 10,
                 paddingLeft: 10,
@@ -105,12 +107,31 @@ export default function App() {
                 backgroundColor: '#111211',
               }}
             >
-              <Entypo
-                onPress={() => toggleDrawer(!drawerOpen)}
-                name='menu'
-                size={24}
-                color='#B8C2B9'
-              />
+              <View
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  gap: 2,
+                  alignItems: 'center',
+                }}
+              >
+                <Entypo
+                  onPress={() => toggleDrawer(!drawerOpen)}
+                  name='menu'
+                  size={35}
+                  color='#B8C2B9'
+                  style={{ marginTop: 3 }}
+                />
+                <Image
+                  style={{
+                    height: 20,
+                    width: 80,
+                    resizeMode: 'contain',
+                    margin: 0,
+                  }}
+                  source={require('../assets/logo.png')}
+                />
+              </View>
               <Pressable
                 onPress={() => toggleDrawer(!drawerOpen)}
                 style={{
@@ -147,7 +168,7 @@ export default function App() {
               style={{
                 width: '100%',
                 height: '100%',
-                backgroundColor: '#00000055',
+                backgroundColor: '#00000088',
               }}
             />
           </Animated.View>
@@ -155,7 +176,8 @@ export default function App() {
             <Entypo
               onPress={() => toggleDrawer(!drawerOpen)}
               name='menu'
-              size={24}
+              size={35}
+              style={{ marginTop: 3 }}
               color='#B8C2B9'
             />
             <Slot />
