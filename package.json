@@ -3,8 +3,7 @@
 	"version": "0.0.1",
 	"main": "expo-router/entry",
 	"scripts": {
-		"lint": "biome lint ./app",
-		"format": "bunx @biomejs/biome format --write ./app",
+		"check": "bunx @biomejs/biome check --apply ./app",
 		"dev": "expo start",
 		"android": "expo start --android",
 		"ios": "expo start --ios",
