@@ -1,0 +1,8 @@
+{
+	"recommendations": [
+		"biomejs.biome",
+		"expo.vscode-expo-tools",
+		"bierner.github-markdown-preview",
+		"yoavbls.pretty-ts-errors"
+	]
+}
