@@ -5,6 +5,7 @@ import {
 	writeTextFile,
 } from '@tauri-apps/api/fs';
 
+//todo: construct file tree
 export const readDirectoryDesktop = async (path: string) => {
 	const entries = await readDir(path, { dir: BaseDirectory.Document });
 	return entries.map((entry) => entry.path);

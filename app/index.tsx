@@ -31,6 +31,7 @@ export default function Flow() {
 		ref_title.current?.focus();
 	};
 
+	//todo: async storage for title and current note
 	const handleTitleChange = (t: string) => {
 		const newTitle = t.replace(' ', '.').toLocaleLowerCase();
 		setTitle(newTitle);

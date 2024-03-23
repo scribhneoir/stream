@@ -1,5 +1,6 @@
 import * as FileSystem from 'expo-file-system';
 
+//todo: construct file tree
 export const readDirectoryMobile = async (path: string) => {
 	return await FileSystem.readDirectoryAsync(
 		`${FileSystem.documentDirectory}${path}`,

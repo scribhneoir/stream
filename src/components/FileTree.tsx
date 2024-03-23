@@ -11,7 +11,9 @@ export default function FileTree(props: {
 		<>
 			{tree.map((node) => (
 				<>
+					//todo: change to link if file
 					<Text
+						//todo: fix the key
 						key={node.displayName}
 						style={{
 							color: node.path ? '#B8C2B9' : '#353835',

@@ -17,9 +17,6 @@ export const FileStorageProvider = (props: { children: ReactNode }) => {
 	const [poolDir, setPoolDir] = useState<string>();
 	const [rootFileHandle, setRootFileHandle] =
 		useState<FileSystemDirectoryHandle | null>(null);
-	const [fileHandleList, setFileHandleList] = useState<
-		Array<FileSystemFileHandle>
-	>([]);
 	const [fileTree, setFileTree] = useState<Array<FileTreeNode>>([]);
 
 	const setRootDir = async () => {
@@ -36,6 +33,7 @@ export const FileStorageProvider = (props: { children: ReactNode }) => {
 				setPoolDir(dirHandle.name);
 			}
 		}
+		//todo: handle other platforms
 	};
 
 	const refreshFileList = async () => {
@@ -49,10 +47,12 @@ export const FileStorageProvider = (props: { children: ReactNode }) => {
 	};
 
 	const readFile = async (path: string) => {
+		//todo: implement
 		return '';
 	};
 
 	const writeFile = async (path: string, data: string) => {
+		//todo: implement
 		return '';
 	};
 
