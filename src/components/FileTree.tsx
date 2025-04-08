@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text } from 'react-native';
+import { Pressable, Text } from 'react-native';
 import type { FileTreeNode } from '../providers/FileStorage/FileStorageProvider';
 
 export default function FileTree(props: {
@@ -7,30 +7,39 @@ export default function FileTree(props: {
 	index?: number;
 }) {
 	const { index, tree } = props;
+	const [collapsed, setCollapsed] = React.useState(false);
+
+	const handlePress = (node: FileTreeNode) => {
+		if (node?.fileName) {
+			return;
+		}
+		if (node.children.length > 0) {
+			setCollapsed(!collapsed);
+		}
+	};
+
 	return (
 		<>
 			{tree.map((node) => (
-				<>
-					//todo: change to link if file
+				<Pressable key={node.displayName} onPress={() => handlePress(node)}>
 					<Text
 						//todo: fix the key
-						key={node.displayName}
 						style={{
-							color: node.path ? '#B8C2B9' : '#353835',
+							color: node.fileName ? '#B8C2B9' : '#353835',
 							fontFamily: 'sp',
 							fontSize: 15,
 							marginTop: -1,
 							marginLeft: index ? index * 10 : 0,
 						}}
 					>
-						{index && '┕ '}
+						{index && (collapsed ? '▼ ' : '┕ ')}
 						{node.displayName}
-						{node.path && '.md'}
+						{node.fileName && '.md'}
 					</Text>
-					{node.children.length > 0 && (
+					{!collapsed && node.children.length > 0 && (
 						<FileTree tree={node.children} index={index ? index + 1 : 1} />
 					)}
-				</>
+				</Pressable>
 			))}
 		</>
 	);

@@ -8,6 +8,7 @@ import {
 	type TextInputKeyPressEventData,
 	View,
 } from 'react-native';
+import { useFileStorage } from '../src/providers/FileStorage';
 
 export default function Flow() {
 	const [reset, setReset] = useState(false);
@@ -16,6 +17,8 @@ export default function Flow() {
 	const [tags, setTags] = useState<string>('');
 	const [enterCount, setEnterCount] = useState(0);
 	const [tagInit, setTagInit] = useState(false);
+
+	const { readFile, writeFile } = useFileStorage();
 
 	const ref_title = useRef<TextInput>(null);
 	const ref_text = useRef<TextInput>(null);
@@ -37,13 +40,39 @@ export default function Flow() {
 		setTitle(newTitle);
 	};
 
+	const handleSave = async () => {
+		const oldTitle = title;
+		const oldTags = tags;
+		const oldText = text.trim();
+		const titleArray = title.split('.');
+		handleStateReset();
+
+		try {
+			let data = await readFile(`${title}.md`);
+			if (!data.trim()) {
+				data = `---\ntitle: ${oldTitle}\ntags: ${oldTags.replaceAll(
+					'#',
+					'\\#',
+				)}\n---\n# ${titleArray[titleArray.length - 1]}`;
+			}
+			data = `${data}\n### ${new Date().toLocaleDateString()}\n${oldText}`;
+			const ancientTags = data.match(/^(tags:)(.+)/m)?.[0] || '';
+			data.replaceAll(
+				ancientTags,
+				`${ancientTags}${oldTags.replaceAll('#', '\\#')}`,
+			);
+			await writeFile(`${title}.md`, data);
+		} catch (e) {
+			console.log(e);
+		}
+	};
+
 	const handleTextKeyPress = (
 		e: NativeSyntheticEvent<TextInputKeyPressEventData>,
 	) => {
 		if (e.nativeEvent.key === 'Enter') {
 			if (enterCount >= 3) {
-				//todo: handle save
-				handleStateReset();
+				handleSave();
 			} else {
 				setEnterCount(enterCount + 1);
 			}
@@ -151,6 +180,7 @@ export default function Flow() {
 					display: 'flex',
 					height: '90%',
 					width: '100%',
+					maxWidth: 500,
 					alignItems: 'center',
 					justifyContent: 'flex-start',
 				}}
@@ -186,7 +216,6 @@ export default function Flow() {
 						{
 							fontFamily: 'sp',
 							width: '100%',
-							maxHeight: '100%',
 							position: 'absolute',
 							bottom: '50%',
 							color: '#B8C2B9',

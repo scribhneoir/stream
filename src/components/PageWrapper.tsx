@@ -1,7 +1,7 @@
 import { FontAwesome } from '@expo/vector-icons';
 import { useFonts } from 'expo-font';
 import { StatusBar } from 'expo-status-bar';
-import React, { type ReactNode, useState } from 'react';
+import React, { type ReactNode, useEffect, useState } from 'react';
 import { Image, Keyboard, Pressable, Text, View } from 'react-native';
 import Animated, {
 	LinearTransition,
@@ -15,13 +15,13 @@ import Animated, {
 } from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useFileStorage } from '../providers/FileStorage';
-import { PlatformEnum, usePlatform } from '../providers/Platform';
+import { usePlatform } from '../providers/Platform';
 import FileTree from './FileTree';
 import Splash from './Splash';
 
 export default function PageWrapper(props: { children: ReactNode }) {
 	const { children } = props;
-	const { platform, platformReady } = usePlatform();
+	const { platformReady } = usePlatform();
 	const { fileTree, fsReady } = useFileStorage();
 	const [fontsLoaded] = useFonts({
 		sp: require('../../assets/fonts/SpaceMono/SpaceMono-Regular.ttf'),
