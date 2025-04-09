@@ -3,7 +3,7 @@ import {
 	readDir,
 	readTextFile,
 	writeTextFile,
-} from '@tauri-apps/api/fs';
+} from '@tauri-apps/plugin-fs';
 
 //todo: construct file tree
 export const readDirectoryDesktop = async (path: string) => {
