@@ -8,7 +8,7 @@ import {
 	type TextInputKeyPressEventData,
 	View,
 } from 'react-native';
-import { useFileStorage } from '../src/providers/FileStorage';
+import { useFileStorage } from '../providers/FileStorage';
 
 export default function Flow() {
 	const [reset, setReset] = useState(false);
@@ -139,7 +139,7 @@ export default function Flow() {
 								scrollbarWidth: 'none',
 								// @ts-ignore
 								outlineStyle: 'none',
-						  }
+							}
 						: {},
 				]}
 			/>
@@ -170,7 +170,7 @@ export default function Flow() {
 								scrollbarWidth: 'none',
 								// @ts-ignore
 								outlineStyle: 'none',
-						  }
+							}
 						: {},
 				]}
 			/>
@@ -231,7 +231,7 @@ export default function Flow() {
 									scrollbarWidth: 'none',
 									// @ts-ignore
 									outlineStyle: 'none',
-							  }
+								}
 							: {},
 					]}
 				/>
