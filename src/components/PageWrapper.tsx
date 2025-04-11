@@ -1,5 +1,6 @@
 import { FontAwesome } from '@expo/vector-icons';
 import { useFonts } from 'expo-font';
+import { useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import React, { type ReactNode, useState } from 'react';
 import { Image, Keyboard, Pressable, Text, View } from 'react-native';
@@ -31,6 +32,7 @@ export default function PageWrapper(props: { children: ReactNode }) {
 	});
 
 	const [drawerOpen, setDrawerOpen] = useState(false);
+	const router = useRouter();
 	const width = useSharedValue(0);
 	const animatedRef = useAnimatedRef();
 
@@ -38,7 +40,7 @@ export default function PageWrapper(props: { children: ReactNode }) {
 		runOnUI(() => {
 			const measurement = measure(animatedRef);
 			width.value = open
-				? withSpring(0, {
+				? withSpring(measurement?.width || 300, {
 						duration: 200,
 						dampingRatio: 1,
 						stiffness: 100,
@@ -46,8 +48,8 @@ export default function PageWrapper(props: { children: ReactNode }) {
 						restDisplacementThreshold: 0.01,
 						restSpeedThreshold: 2,
 						reduceMotion: ReduceMotion.Never,
-				  })
-				: withSpring(measurement?.width || 300, {
+					})
+				: withSpring(0, {
 						duration: 200,
 						dampingRatio: 1,
 						stiffness: 100,
@@ -55,7 +57,7 @@ export default function PageWrapper(props: { children: ReactNode }) {
 						restDisplacementThreshold: 0.01,
 						restSpeedThreshold: 2,
 						reduceMotion: ReduceMotion.Never,
-				  });
+					});
 		})();
 		setDrawerOpen(open);
 		if (!open) {
@@ -68,6 +70,11 @@ export default function PageWrapper(props: { children: ReactNode }) {
 			width: width.value,
 		};
 	});
+
+	const handleStreamPress = () => {
+		router.navigate('/');
+		toggleDrawer(false);
+	};
 
 	return (
 		<>
@@ -143,7 +150,7 @@ export default function PageWrapper(props: { children: ReactNode }) {
 										/>
 									</View>
 									<Pressable
-										onPress={() => toggleDrawer(!drawerOpen)}
+										onPress={handleStreamPress}
 										style={{
 											backgroundColor: '#B8C2B9',
 											alignItems: 'center',
@@ -186,10 +193,10 @@ export default function PageWrapper(props: { children: ReactNode }) {
 									>
 										pool
 									</Text>
-									<FileTree tree={fileTree} />
+									<FileTree tree={fileTree} toggleDrawer={toggleDrawer} />
 								</View>
 								<Pressable
-									onPress={() => toggleDrawer(!drawerOpen)}
+									onPress={() => toggleDrawer(false)}
 									style={{
 										width: '100%',
 										height: '100%',
@@ -199,7 +206,7 @@ export default function PageWrapper(props: { children: ReactNode }) {
 							</Animated.View>
 							<View style={{ padding: 10, height: '100%', width: '100%' }}>
 								<FontAwesome
-									onPress={() => toggleDrawer(!drawerOpen)}
+									onPress={() => toggleDrawer(true)}
 									name='bars'
 									size={25}
 									color='#B8C2B9'

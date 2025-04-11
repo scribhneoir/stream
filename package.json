@@ -17,7 +17,6 @@
 	},
 	"dependencies": {
 		"@expo/metro-runtime": "~4.0.1",
-		"@react-native-async-storage/async-storage": "1.23.1",
 		"@tauri-apps/api": "^2.0.0",
 		"@tauri-apps/plugin-fs": "~2",
 		"expo": "^52.0.44",

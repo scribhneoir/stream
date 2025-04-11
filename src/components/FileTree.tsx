@@ -5,15 +5,17 @@ import type { FileTreeNode } from '../providers/FileStorage/FileStorageProvider'
 
 export default function FileTree(props: {
 	tree: FileTreeNode[];
+	toggleDrawer: (open: boolean) => void;
 	index?: number;
 }) {
-	const { index, tree } = props;
+	const { index, tree, toggleDrawer } = props;
 	const router = useRouter();
 	const [collapsed, setCollapsed] = React.useState(false);
 
 	const handlePress = (node: FileTreeNode) => {
 		if (node?.fileName) {
 			router.navigate(`/pool/${node.fileName}`);
+			toggleDrawer(false);
 			return;
 		}
 		if (node.children.length > 0) {
@@ -40,7 +42,11 @@ export default function FileTree(props: {
 						{node.fileName && '.md'}
 					</Text>
 					{!collapsed && node.children.length > 0 && (
-						<FileTree tree={node.children} index={index ? index + 1 : 1} />
+						<FileTree
+							tree={node.children}
+							index={index ? index + 1 : 1}
+							toggleDrawer={toggleDrawer}
+						/>
 					)}
 				</Pressable>
 			))}
