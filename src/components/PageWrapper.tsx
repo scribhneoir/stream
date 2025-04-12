@@ -3,7 +3,7 @@ import { useFonts } from 'expo-font';
 import { useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import React, { type ReactNode, useState } from 'react';
-import { Image, Keyboard, Pressable, Text, View } from 'react-native';
+import { Image, Keyboard, Platform, Pressable, Text, View } from 'react-native';
 import Animated, {
 	LinearTransition,
 	ReduceMotion,
@@ -122,13 +122,15 @@ export default function PageWrapper(props: { children: ReactNode }) {
 										width: 300,
 										gap: 8,
 										backgroundColor: '#111211',
+										overflow: 'hidden',
+										display: 'flex',
 									}}
 								>
 									<View
 										style={{
 											display: 'flex',
 											flexDirection: 'row',
-											gap: 2,
+											gap: 10,
 											alignItems: 'center',
 										}}
 									>
@@ -137,7 +139,7 @@ export default function PageWrapper(props: { children: ReactNode }) {
 											name='bars'
 											size={25}
 											color='#B8C2B9'
-											style={{ marginTop: 3 }}
+											style={{ marginTop: 3, cursor: 'pointer' }}
 										/>
 										<Image
 											style={{
@@ -159,7 +161,8 @@ export default function PageWrapper(props: { children: ReactNode }) {
 											gap: 10,
 											padding: 4,
 											paddingLeft: 10,
-											marginLeft: 4,
+											marginLeft: -10,
+											cursor: 'pointer',
 										}}
 									>
 										<FontAwesome
@@ -193,7 +196,26 @@ export default function PageWrapper(props: { children: ReactNode }) {
 									>
 										pool
 									</Text>
-									<FileTree tree={fileTree} toggleDrawer={toggleDrawer} />
+									<View
+										style={[
+											{
+												flex: 1,
+												display: 'flex',
+												overflow: 'scroll',
+											},
+											Platform.OS === 'web'
+												? {
+														//web-only style props
+														// @ts-ignore
+														scrollbarColor: '#B8C2B9 #111211',
+														overflowY: 'scroll',
+														overflowX: 'hidden',
+													}
+												: {},
+										]}
+									>
+										<FileTree tree={fileTree} toggleDrawer={toggleDrawer} />
+									</View>
 								</View>
 								<Pressable
 									onPress={() => toggleDrawer(false)}
