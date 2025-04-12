@@ -48,16 +48,24 @@ export const TitleField = (props: {
 
 	return (
 		<Animated.View
-			entering={SlideInDown.springify().reduceMotion(ReduceMotion.Never)}
-			exiting={SlideOutDown.springify().reduceMotion(ReduceMotion.Never)}
+			entering={SlideInDown.springify()
+				.mass(1)
+				.damping(15)
+				.stiffness(100)
+				.reduceMotion(ReduceMotion.Never)}
+			exiting={SlideOutDown.springify()
+				.mass(1)
+				.damping(15)
+				.stiffness(100)
+				.reduceMotion(ReduceMotion.Never)}
 			style={{
 				borderRadius: 10,
 				borderWidth: 2,
 				borderColor: '#353835',
 				overflow: 'hidden',
 				paddingHorizontal: 7,
-				// position: 'absolute',
-				// top: '30%',
+				width: '100%',
+				maxWidth: 400,
 				zIndex: 1,
 			}}
 		>

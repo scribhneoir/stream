@@ -86,13 +86,21 @@ export const VeiledTextInput = (props: {
 
 	return (
 		<Animated.View
-			entering={SlideInUp.springify().reduceMotion(ReduceMotion.Never)}
-			exiting={SlideOutUp.springify().reduceMotion(ReduceMotion.Never)}
+			entering={SlideInUp.springify()
+				.mass(1)
+				.damping(15)
+				.stiffness(100)
+				.reduceMotion(ReduceMotion.Never)}
+			exiting={SlideOutUp.springify()
+				.mass(1)
+				.damping(15)
+				.stiffness(100)
+				.reduceMotion(ReduceMotion.Never)}
 			style={{
 				display: 'flex',
 				alignItems: 'center',
 				justifyContent: 'flex-start',
-				height: '90%',
+				height: Platform.OS === 'web' ? '80%' : '100%',
 				width: '100%',
 				maxWidth: 500,
 			}}
@@ -163,8 +171,6 @@ export const VeiledTextInput = (props: {
 							color: '#B8C2B9',
 							fontSize: 18,
 							verticalAlign: 'bottom',
-							paddingTop: 0,
-							paddingBottom: 0,
 						},
 						Platform.OS === 'web'
 							? {
@@ -181,7 +187,7 @@ export const VeiledTextInput = (props: {
 					locations={[0.5, 1]}
 					style={{
 						width: '100%',
-						height: '50%',
+						height: Platform.OS === 'web' ? '50%' : '40%',
 						pointerEvents: 'none',
 					}}
 				/>

@@ -61,6 +61,7 @@ export default function Flow() {
 				width: '100%',
 				alignItems: 'center',
 				justifyContent: 'flex-start',
+				marginTop: 30,
 			}}
 		>
 			{showTitle && (
