@@ -60,9 +60,7 @@ export default function PageWrapper(props: { children: ReactNode }) {
 					});
 		})();
 		setDrawerOpen(open);
-		if (!open) {
-			Keyboard.dismiss();
-		}
+		Keyboard.dismiss();
 	};
 
 	const animatedStyles = useAnimatedStyle(() => {
