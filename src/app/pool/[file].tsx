@@ -20,6 +20,14 @@ export default function Pool() {
 		})();
 	}, [file, readFile]);
 
+	//todo: add title rename
+
+	//todo: render frontmatter seperately
+
+	//todo: render markdown
+
+	//todo: add tags
+
 	return (
 		<View
 			style={{
