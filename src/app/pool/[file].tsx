@@ -1,12 +1,12 @@
 import { useLocalSearchParams } from 'expo-router';
-import React, { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Platform, TextInput, View } from 'react-native';
 import { useFileStorage } from '../../providers/FileStorage';
 
 export default function Pool() {
 	const { file } = useLocalSearchParams();
 	const { readFile, writeFile } = useFileStorage();
-	const [text, setText] = React.useState<string>('');
+	const [text, setText] = useState<string>('');
 
 	const handleChange = async (newText: string) => {
 		setText(newText);

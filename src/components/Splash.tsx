@@ -1,4 +1,3 @@
-import React from 'react';
 import { Image, Pressable, Text, View } from 'react-native';
 import { useFileStorage } from '../providers/FileStorage';
 import { PlatformEnum, usePlatform } from '../providers/Platform';

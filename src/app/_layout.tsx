@@ -1,5 +1,4 @@
 import { Slot } from 'expo-router';
-import React from 'react';
 import PageWrapper from '../components/PageWrapper';
 import { FileStorageProvider } from '../providers/FileStorage';
 import { PlatformProvider } from '../providers/Platform';

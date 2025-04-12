@@ -2,7 +2,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import { useFonts } from 'expo-font';
 import { useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import React, { type ReactNode, useState } from 'react';
+import { type ReactNode, useState } from 'react';
 import { Image, Keyboard, Platform, Pressable, Text, View } from 'react-native';
 import Animated, {
 	LinearTransition,

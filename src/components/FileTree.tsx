@@ -1,5 +1,5 @@
 import { useRouter } from 'expo-router';
-import React from 'react';
+import { useState } from 'react';
 import { Pressable, Text } from 'react-native';
 import type { FileTreeNode } from '../providers/FileStorage/FileStorageProvider';
 
@@ -10,7 +10,7 @@ export default function FileTree(props: {
 }) {
 	const { index, tree, toggleDrawer } = props;
 	const router = useRouter();
-	const [collapsed, setCollapsed] = React.useState(false);
+	const [collapsed, setCollapsed] = useState(false);
 
 	const handlePress = (node: FileTreeNode) => {
 		if (node?.fileName) {
