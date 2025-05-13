@@ -19,8 +19,8 @@ export const PoolTitle = (props: {
 				if (Platform.OS === 'web') {
 					// @ts-ignore - accessing DOM properties
 					const element = titleRef.current;
-					// @ts-ignore - accessing DOM properties
 					if (element) {
+						// @ts-ignore - accessing DOM properties
 						element?.setSelectionRange(
 							// @ts-ignore - accessing DOM properties
 							element.value.length,
