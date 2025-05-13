@@ -4,7 +4,11 @@ export const readDirectoryWeb = async (
 	const fileList: string[] = [];
 	// @ts-ignore
 	for await (const [_, value] of directoryHandle.entries()) {
-		if (value.kind === 'file') {
+		if (
+			value.kind === 'file' &&
+			value.name[0] !== '.' &&
+			value.name.endsWith('.md')
+		) {
 			fileList.push(value.name.replace('.md', ''));
 		}
 	}
