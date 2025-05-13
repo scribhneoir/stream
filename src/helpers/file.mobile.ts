@@ -13,7 +13,7 @@ export const readDirectoryMobile = async (path: string) => {
 			`${FileSystem.documentDirectory}${path}`,
 		);
 
-		return files;
+		return files.map((file) => file.replace('.md', ''));
 	} catch (e) {
 		console.log(e);
 		return [];
