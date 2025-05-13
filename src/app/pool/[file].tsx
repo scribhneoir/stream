@@ -29,9 +29,6 @@ export default function Pool() {
 		}, 300); // Adjust debounce delay as needed
 	};
 
-	const fileData = () =>
-		`---\n${stringify({ title, draft, tags })}---\n${text}`;
-
 	const handleTitleBlur = async () => {
 		const frontmatter = { title, draft, tags };
 		let textToWrite = text.trim();
@@ -67,6 +64,41 @@ export default function Pool() {
 				setTags(frontmatterData?.tags ?? []);
 			}
 		})();
+	}, [file]);
+
+	// Create a ref to hold the latest state values
+	const latestStateRef = useRef({ text, title, draft, tags });
+
+	// Keep the ref updated whenever state changes
+	useEffect(() => {
+		latestStateRef.current = { text, title, draft, tags };
+	}, [text, title, draft, tags]);
+
+	const fileData = () => {
+		const { text, title, draft, tags } = latestStateRef.current;
+		return `---\n${stringify({ title, draft, tags })}---\n${text}`;
+	};
+
+	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+	useEffect(() => {
+		// Clean up function to force save when component unmounts
+		return () => {
+			if (debounceTimeout.current) {
+				clearTimeout(debounceTimeout.current);
+				debounceTimeout.current = null;
+			}
+
+			// Force save using the latest state captured in ref
+			if (file) {
+				const { text: currentText } = latestStateRef.current;
+				// Only save if there's actual content to save
+				if (currentText && currentText.trim() !== '') {
+					writeFile(`${file}.md`, fileData()).catch((err) =>
+						console.error('Failed to save file on unmount:', err),
+					);
+				}
+			}
+		};
 	}, [file]);
 
 	return (
