@@ -62,7 +62,7 @@ export default function Pool() {
 
 			if (frontmatter) {
 				const frontmatterData = parse(frontmatter);
-				setTitle(frontmatterData?.title ?? '');
+				setTitle(frontmatterData?.title.toString() ?? '');
 				setDraft(frontmatterData?.draft === 'true');
 				setTags(frontmatterData?.tags ?? []);
 			}

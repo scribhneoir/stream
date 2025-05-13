@@ -20,12 +20,14 @@ export const PoolTitle = (props: {
 					// @ts-ignore - accessing DOM properties
 					const element = titleRef.current;
 					// @ts-ignore - accessing DOM properties
-					element?.setSelectionRange(
-						// @ts-ignore - accessing DOM properties
-						element.value.length,
-						// @ts-ignore - accessing DOM properties
-						element.value.length,
-					);
+					if (element) {
+						element?.setSelectionRange(
+							// @ts-ignore - accessing DOM properties
+							element.value.length,
+							// @ts-ignore - accessing DOM properties
+							element.value.length,
+						);
+					}
 				}
 			}, 100);
 			return;
@@ -95,7 +97,7 @@ export const PoolTitle = (props: {
 							: {},
 					]}
 				>
-					{title.split('.').at(-1)}
+					{title ? title?.split('.').at(-1) : ''}
 				</Text>
 			)}
 		</Pressable>

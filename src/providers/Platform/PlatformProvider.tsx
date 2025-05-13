@@ -1,5 +1,5 @@
 import { type ReactNode, useEffect, useState } from 'react';
-import { Platform } from 'react-native';
+import { Platform, Text } from 'react-native';
 import {
 	PlatformContext,
 	type PlatformContextType,
@@ -14,7 +14,7 @@ const FileStorageProvider = (props: { children: ReactNode }) => {
 	useEffect(() => {
 		if (Platform.OS === 'web') {
 			// @ts-ignore
-			if (window.__TAURI__) {
+			if (window.isTauri) {
 				setPlatform(PlatformEnum.DESKTOP);
 			} else {
 				setPlatform(PlatformEnum.WEB);

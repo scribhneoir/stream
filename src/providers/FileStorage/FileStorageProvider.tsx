@@ -1,5 +1,10 @@
 import { type ReactNode, useEffect, useMemo, useState } from 'react';
 import {
+	readDirectoryDesktop,
+	readFileDesktop,
+	writeFileDesktop,
+} from '../../helpers/file.desktop';
+import {
 	readDirectoryMobile,
 	readFileMobile,
 	writeFileMobile,
@@ -67,6 +72,9 @@ export const FileStorageProvider = (props: { children: ReactNode }) => {
 		) {
 			const files = await readDirectoryMobile(poolDir);
 			setFileList(files);
+		} else if (platform === PlatformEnum.DESKTOP) {
+			const files = await readDirectoryDesktop(poolDir);
+			setFileList(files);
 		}
 		//todo: handle desktop
 		if (!fsReady) {
@@ -84,6 +92,9 @@ export const FileStorageProvider = (props: { children: ReactNode }) => {
 		if (platform === PlatformEnum.IOS || platform === PlatformEnum.ANDROID) {
 			return await readFileMobile(`${poolDir}/${fileName}`);
 		}
+		if (platform === PlatformEnum.DESKTOP) {
+			return await readFileDesktop(`${poolDir}/${fileName}`);
+		}
 
 		return '';
 	};
@@ -100,6 +111,8 @@ export const FileStorageProvider = (props: { children: ReactNode }) => {
 			platform === PlatformEnum.ANDROID
 		) {
 			result = await writeFileMobile(`${poolDir}/${fileName}`, data);
+		} else if (platform === PlatformEnum.DESKTOP) {
+			result = await writeFileDesktop(`${poolDir}/${fileName}`, data);
 		}
 		refreshFileList();
 		return result;
