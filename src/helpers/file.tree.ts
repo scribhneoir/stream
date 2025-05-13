@@ -9,7 +9,6 @@ const _addToTree = (
 	children: FileTreeNode[],
 	name: string[],
 ) => {
-	console.log('addToTree', index, children, name);
 	const namePart = name[index];
 	const existingNode = children.find((child) => child.displayName === namePart);
 	if (existingNode) {
