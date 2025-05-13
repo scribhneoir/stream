@@ -8,9 +8,9 @@ import {
 	type TextInputKeyPressEventData,
 } from 'react-native';
 import Animated, {
-	SlideInUp,
+	FadeInUp,
 	ReduceMotion,
-	SlideOutUp,
+	FadeOutUp,
 } from 'react-native-reanimated';
 
 export const VeiledTextInput = (props: {
@@ -34,6 +34,7 @@ export const VeiledTextInput = (props: {
 		if (e.nativeEvent.key === 'Enter') {
 			if (enterCount >= 3) {
 				ref_text.current?.blur();
+				setText(text.trim());
 				setShowTitle(true);
 				// handleSave();
 			} else {
@@ -86,12 +87,12 @@ export const VeiledTextInput = (props: {
 
 	return (
 		<Animated.View
-			entering={SlideInUp.springify()
+			entering={FadeInUp.springify()
 				.mass(1)
 				.damping(15)
 				.stiffness(100)
 				.reduceMotion(ReduceMotion.Never)}
-			exiting={SlideOutUp.springify()
+			exiting={FadeOutUp.springify()
 				.mass(1)
 				.damping(15)
 				.stiffness(100)
@@ -156,6 +157,8 @@ export const VeiledTextInput = (props: {
 					autoCorrect={false}
 					autoComplete='off'
 					spellCheck={false}
+					placeholder='Write something...'
+					placeholderTextColor='#353835'
 					ref={ref_text}
 					onKeyPress={(e) => handleTextKeyPress(e)}
 					onChange={(e) => {

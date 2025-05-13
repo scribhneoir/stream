@@ -1,9 +1,10 @@
-import { type ReactNode, useEffect, useState } from 'react';
+import { type ReactNode, useEffect, useMemo, useState } from 'react';
 import {
 	readDirectoryMobile,
 	readFileMobile,
 	writeFileMobile,
 } from '../../helpers/file.mobile';
+import { addToTree } from '../../helpers/file.tree';
 import {
 	readDirectoryWeb,
 	readFileWeb,
@@ -25,7 +26,15 @@ export const FileStorageProvider = (props: { children: ReactNode }) => {
 	const [poolDir, setPoolDir] = useState<string>('');
 	const [rootFileHandle, setRootFileHandle] =
 		useState<FileSystemDirectoryHandle | null>(null);
-	const [fileTree, setFileTree] = useState<Array<FileTreeNode>>([]);
+	const [fileList, setFileList] = useState<Array<string>>([]);
+
+	const fileTree: Array<FileTreeNode> = useMemo(() => {
+		let ft: Array<FileTreeNode> = [];
+		for (const value of fileList) {
+			ft = addToTree(ft, value);
+		}
+		return ft;
+	}, [fileList]);
 
 	const setRootDir = async () => {
 		if (platform === PlatformEnum.WEB) {
@@ -51,13 +60,13 @@ export const FileStorageProvider = (props: { children: ReactNode }) => {
 	const refreshFileList = async () => {
 		if (platform === PlatformEnum.WEB && rootFileHandle) {
 			const files = await readDirectoryWeb(rootFileHandle);
-			setFileTree(files);
+			setFileList(files);
 		} else if (
 			platform === PlatformEnum.IOS ||
 			platform === PlatformEnum.ANDROID
 		) {
 			const files = await readDirectoryMobile(poolDir);
-			setFileTree(files);
+			setFileList(files);
 		}
 		//todo: handle desktop
 		if (!fsReady) {
@@ -114,6 +123,7 @@ export const FileStorageProvider = (props: { children: ReactNode }) => {
 	const wrapped: FileStorageContextType = {
 		fsReady,
 		fileTree,
+		fileList,
 		setRootDir,
 		refreshFileList,
 		readFile,

@@ -1,6 +1,4 @@
 import * as FileSystem from 'expo-file-system';
-import type { FileTreeNode } from '../providers/FileStorage/FileStorageProvider';
-import { addToTree } from './file.tree';
 
 export const readDirectoryMobile = async (path: string) => {
 	const dir = FileSystem.documentDirectory + path;
@@ -11,16 +9,11 @@ export const readDirectoryMobile = async (path: string) => {
 	}
 
 	try {
-		let fileList: FileTreeNode[] = [];
 		const files = await FileSystem.readDirectoryAsync(
 			`${FileSystem.documentDirectory}${path}`,
 		);
 
-		for (const file of files) {
-			fileList = addToTree(0, fileList, file.split('.').slice(0, -1));
-		}
-
-		return fileList;
+		return files;
 	} catch (e) {
 		console.log(e);
 		return [];

@@ -34,10 +34,10 @@ export default function Flow() {
 		try {
 			let data = await readFile(`${title}.md`);
 			if (!data.trim()) {
-				data = `---\ntitle: ${oldTitle}\ndate: ${new Date().toLocaleDateString()}\ndraft: true\ntags: ${oldTags.replaceAll(
+				data = `---\ntitle: ${oldTitle.split('.').at(-1)}\ndate: ${new Date().toLocaleDateString()}\ndraft: true\ntags: ${oldTags.replaceAll(
 					'#',
 					'\n  - ',
-				)}\n---\n# ${titleArray[titleArray.length - 1]}`;
+				)}\n---\n`;
 			}
 			data = `${data}\n\n### ${new Date().toLocaleDateString()}\n${oldText}`;
 			const ancientTags = data.match(/^(tags:)(.+)/m)?.[0] || '';

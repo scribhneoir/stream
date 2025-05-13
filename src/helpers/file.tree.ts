@@ -1,6 +1,10 @@
+import { Children } from 'react';
 import type { FileTreeNode } from '../providers/FileStorage/FileStorageProvider';
 
-export const addToTree = (
+export const addToTree = (children: FileTreeNode[], name: string) =>
+	_addToTree(0, children, name.split('.').slice(0, -1));
+
+const _addToTree = (
 	index: number,
 	children: FileTreeNode[],
 	name: string[],
@@ -12,7 +16,7 @@ export const addToTree = (
 			existingNode.fileName = name.join('.');
 			return children;
 		}
-		existingNode.children = addToTree(index + 1, existingNode.children, name);
+		existingNode.children = _addToTree(index + 1, existingNode.children, name);
 	} else {
 		if (index === name.length - 1) {
 			children.push({
@@ -24,7 +28,7 @@ export const addToTree = (
 		}
 		const newNode = {
 			displayName: namePart,
-			children: addToTree(index + 1, [], name),
+			children: _addToTree(index + 1, [], name),
 		};
 		children.push(newNode);
 	}

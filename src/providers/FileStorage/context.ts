@@ -4,6 +4,7 @@ import type { FileTreeNode } from './FileStorageProvider';
 export type FileStorageContextType = {
 	fsReady: boolean;
 	fileTree: Array<FileTreeNode>;
+	fileList: Array<string>;
 	refreshFileList: () => void;
 	setRootDir: () => void;
 	readFile: (path: string) => Promise<string>;

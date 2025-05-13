@@ -37,7 +37,11 @@ export default function FileTree(props: {
 							marginLeft: index ? index * 10 : 0,
 						}}
 					>
-						{index && (collapsed ? '▼ ' : '┕ ')}
+						{node.children.length
+							? collapsed
+								? '\udb80\ude4b '
+								: '\udb81\udf70 '
+							: '\uf15b '}
 						{node.displayName}
 						{node.fileName && '.md'}
 					</Text>

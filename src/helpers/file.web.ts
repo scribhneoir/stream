@@ -1,14 +1,11 @@
-import type { FileTreeNode } from '../providers/FileStorage/FileStorageProvider';
-import { addToTree } from './file.tree';
-
 export const readDirectoryWeb = async (
 	directoryHandle: FileSystemDirectoryHandle,
 ) => {
-	let fileList: FileTreeNode[] = [];
+	const fileList: string[] = [];
 	// @ts-ignore
 	for await (const [_, value] of directoryHandle.entries()) {
 		if (value.kind === 'file') {
-			fileList = addToTree(0, fileList, value.name.split('.').slice(0, -1));
+			fileList.push(value.name.replace('.md', ''));
 		}
 	}
 	return fileList;
