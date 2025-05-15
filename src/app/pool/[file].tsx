@@ -113,20 +113,11 @@ export default function Pool() {
 						height: '90%',
 						width: '100%',
 						alignItems: 'center',
+						overflow: 'hidden',
 						justifyContent: 'flex-start',
-						overflow: 'scroll',
 						paddingBottom: 10,
 						gap: 10,
 					},
-					Platform.OS === 'web'
-						? {
-								//web-only style props
-								// @ts-ignore
-								scrollbarColor: '#B8C2B9 #111211',
-								overflowY: 'scroll',
-								overflowX: 'hidden',
-							}
-						: {},
 				]}
 			>
 				<PoolTitle title={title} setTitle={setTitle} onBlur={handleTitleBlur} />
@@ -159,9 +150,7 @@ export default function Pool() {
 							? {
 									//web-only style props
 									// @ts-ignore
-									scrollbarWidth: 'none',
-									// @ts-ignore
-									outlineStyle: 'none',
+									scrollbarColor: ' #111211 #000000',
 								}
 							: {},
 					]}

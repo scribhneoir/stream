@@ -1,9 +1,9 @@
 import { createContext, useContext } from 'react';
-import type { FileTreeNode } from './FileStorageProvider';
+import type { Tree } from '../../helpers/file.tree';
 
 export type FileStorageContextType = {
 	fsReady: boolean;
-	fileTree: Array<FileTreeNode>;
+	fileTree: Tree;
 	fileList: Array<string>;
 	refreshFileList: () => void;
 	setRootDir: () => void;

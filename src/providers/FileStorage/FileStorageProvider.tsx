@@ -9,7 +9,7 @@ import {
 	readFileMobile,
 	writeFileMobile,
 } from '../../helpers/file.mobile';
-import { addToTree } from '../../helpers/file.tree';
+import { type Tree, toFileTree } from '../../helpers/file.tree';
 import {
 	readDirectoryWeb,
 	readFileWeb,
@@ -17,12 +17,6 @@ import {
 } from '../../helpers/file.web';
 import { PlatformEnum, usePlatform } from '../Platform/context';
 import { FileStorageContext, type FileStorageContextType } from './context';
-
-export type FileTreeNode = {
-	displayName: string;
-	fileName?: string;
-	children: Array<FileTreeNode>;
-};
 
 export const FileStorageProvider = (props: { children: ReactNode }) => {
 	const { children } = props;
@@ -33,13 +27,7 @@ export const FileStorageProvider = (props: { children: ReactNode }) => {
 		useState<FileSystemDirectoryHandle | null>(null);
 	const [fileList, setFileList] = useState<Array<string>>([]);
 
-	const fileTree: Array<FileTreeNode> = useMemo(() => {
-		let ft: Array<FileTreeNode> = [];
-		for (const value of fileList) {
-			ft = addToTree(ft, value);
-		}
-		return ft;
-	}, [fileList]);
+	const fileTree: Tree = useMemo(() => toFileTree(fileList), [fileList]);
 
 	const setRootDir = async () => {
 		if (platform === PlatformEnum.WEB) {

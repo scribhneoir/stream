@@ -1,10 +1,10 @@
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { Pressable, Text } from 'react-native';
-import type { FileTreeNode } from '../providers/FileStorage/FileStorageProvider';
+import type { Tree, TreeNode } from '../helpers/file.tree';
 
 export default function FileTree(props: {
-	tree: FileTreeNode[];
+	tree: Tree;
 	toggleDrawer: (open: boolean) => void;
 	index?: number;
 }) {
@@ -12,10 +12,11 @@ export default function FileTree(props: {
 
 	return (
 		<>
-			{tree.map((node) => (
+			{Object.keys(tree).map((key) => (
 				<TreeItem
-					key={node.displayName}
-					item={node}
+					key={key}
+					name={key}
+					item={tree[key]}
 					index={index}
 					toggleDrawer={toggleDrawer}
 				/>
@@ -25,21 +26,22 @@ export default function FileTree(props: {
 }
 
 function TreeItem(props: {
-	item: FileTreeNode;
+	name: string;
+	item: TreeNode;
 	index?: number;
 	toggleDrawer: (open: boolean) => void;
 }) {
-	const { item, index, toggleDrawer } = props;
+	const { name, item, index, toggleDrawer } = props;
 	const router = useRouter();
-	const [collapsed, setCollapsed] = useState(false);
+	const [collapsed, setCollapsed] = useState(true);
 
-	const handlePress = (node: FileTreeNode) => {
-		if (node?.fileName) {
-			router.navigate(`/pool/${node.fileName}`);
-			toggleDrawer(false);
-			return;
-		}
-		if (node.children.length > 0) {
+	const handlePress = (node: TreeNode) => {
+		// if (node?.fileName) {
+		// 	router.navigate(`/pool/${node.fileName}`);
+		// 	toggleDrawer(false);
+		// 	return;
+		// }
+		if (Object.keys(node.children).length > 0) {
 			setCollapsed(!collapsed);
 		}
 	};
@@ -52,18 +54,18 @@ function TreeItem(props: {
 					fontFamily: 'sp',
 					fontSize: 15,
 					marginTop: -1,
-					marginLeft: index ? index * 10 : 0,
+					marginLeft: index ? index * 20 : 0,
 				}}
 			>
-				{item.children.length
+				{Object.keys(item.children).length
 					? collapsed
 						? '\udb80\ude4b '
 						: '\udb81\udf70 '
 					: '\uf15b '}
-				{item.displayName}
+				{name}
 				{item.fileName && '.md'}
 			</Text>
-			{!collapsed && item.children.length > 0 && (
+			{!collapsed && Object.keys(item.children).length > 0 && (
 				<FileTree
 					tree={item.children}
 					index={index ? index + 1 : 1}
