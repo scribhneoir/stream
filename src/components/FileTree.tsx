@@ -6,9 +6,10 @@ import type { Tree, TreeNode } from '../helpers/file.tree';
 export default function FileTree(props: {
 	tree: Tree;
 	toggleDrawer: (open: boolean) => void;
+	path?: string;
 	index?: number;
 }) {
-	const { index, tree, toggleDrawer } = props;
+	const { index, tree, toggleDrawer, path = '' } = props;
 
 	return (
 		<>
@@ -18,6 +19,7 @@ export default function FileTree(props: {
 					name={key}
 					item={tree[key]}
 					index={index}
+					path={path}
 					toggleDrawer={toggleDrawer}
 				/>
 			))}
@@ -29,18 +31,19 @@ function TreeItem(props: {
 	name: string;
 	item: TreeNode;
 	index?: number;
+	path: string;
 	toggleDrawer: (open: boolean) => void;
 }) {
-	const { name, item, index, toggleDrawer } = props;
+	const { name, item, index, path, toggleDrawer } = props;
 	const router = useRouter();
 	const [collapsed, setCollapsed] = useState(true);
 
 	const handlePress = (node: TreeNode) => {
-		// if (node?.fileName) {
-		// 	router.navigate(`/pool/${node.fileName}`);
-		// 	toggleDrawer(false);
-		// 	return;
-		// }
+		if (node?.fileName) {
+			router.navigate(`/pool/${node.fileName}`);
+			toggleDrawer(false);
+			return;
+		}
 		if (Object.keys(node.children).length > 0) {
 			setCollapsed(!collapsed);
 		}
@@ -50,7 +53,7 @@ function TreeItem(props: {
 		<Pressable onPress={() => handlePress(item)}>
 			<Text
 				style={{
-					color: item.fileName ? '#B8C2B9' : '#353835',
+					color: '#B8C2B9',
 					fontFamily: 'sp',
 					fontSize: 15,
 					marginTop: -1,
@@ -62,14 +65,18 @@ function TreeItem(props: {
 						? '\udb80\ude4b '
 						: '\udb81\udf70 '
 					: '\uf15b '}
-				{name}
-				{item.fileName && '.md'}
+				{item.fileName
+					? name.replace(path, '')
+						? name.replace(path, '')
+						: 'index'
+					: name}
 			</Text>
 			{!collapsed && Object.keys(item.children).length > 0 && (
 				<FileTree
 					tree={item.children}
 					index={index ? index + 1 : 1}
 					toggleDrawer={toggleDrawer}
+					path={props.path ? `${props.path}.${name}` : name}
 				/>
 			)}
 		</Pressable>

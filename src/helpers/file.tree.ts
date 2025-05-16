@@ -22,26 +22,44 @@ export const toFileTree = (files: string[]) => {
 			}
 		}
 	}
-	return tree;
-	// const collapsedTree = colapseTree(tree);
-	// console.log('collapsedTree', collapsedTree);
-	// return collapsedTree;
+
+	const collapsedTree = colapseTree(tree);
+	console.log('collapsedTree', collapsedTree);
+	return collapsedTree;
 };
 
 const colapseTree = (tree: Tree): Tree => {
-	console.log(tree);
-	if (!tree || Object.keys(tree).length === 0) {
-		return {};
+	if (Object.keys(tree).length === 0) {
+		return tree;
 	}
-	for (const key in tree) {
+
+	for (let i = 0; i < Object.keys(tree).length; i++) {
+		const key = Object.keys(tree)[i];
 		const node = tree[key];
-		const childKeys = Object.keys(node.children);
-		if (childKeys.length === 1) {
-			tree[`${key}.${childKeys[0]}`] = { ...node.children[childKeys[0]] };
+		const childrenKeys = Object.keys(node.children);
+		if (childrenKeys.length === 1 && !node.fileName) {
+			tree[`${key}.${childrenKeys[0]}`] = node.children[childrenKeys[0]];
 			delete tree[key];
+			i--;
+		} else if (Object.keys(node.children).length > 0 && node.fileName) {
+			tree[key] = {
+				fileName: null,
+				children: colapseTree({
+					...node.children,
+					[node.fileName]: {
+						fileName: node.fileName,
+						children: {},
+					},
+				}),
+			};
+		} else {
+			tree[key] = {
+				fileName: node.fileName,
+				children: colapseTree(node.children),
+			};
 		}
 	}
-	return colapseTree(tree);
+	return tree;
 };
 
 export type Tree = Record<string, TreeNode>;
