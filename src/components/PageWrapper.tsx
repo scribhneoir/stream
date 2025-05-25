@@ -74,6 +74,11 @@ export default function PageWrapper(props: { children: ReactNode }) {
 		toggleDrawer(false);
 	};
 
+	const handleSettingsPress = () => {
+		router.navigate('/settings');
+		toggleDrawer(false);
+	};
+
 	if (platform !== PlatformEnum.DESKTOP && (!fsReady || !fontsLoaded)) {
 		return <Splash />;
 	}
@@ -111,8 +116,6 @@ export default function PageWrapper(props: { children: ReactNode }) {
 								borderBottomRightRadius: 10,
 								height: '100%',
 								paddingTop: 10,
-								paddingLeft: 10,
-								paddingBottom: 10,
 								width: 300,
 								gap: 8,
 								backgroundColor: '#111211',
@@ -126,6 +129,7 @@ export default function PageWrapper(props: { children: ReactNode }) {
 									flexDirection: 'row',
 									gap: 10,
 									alignItems: 'center',
+									paddingLeft: 10,
 								}}
 							>
 								<FontAwesome
@@ -152,10 +156,9 @@ export default function PageWrapper(props: { children: ReactNode }) {
 									alignItems: 'center',
 									display: 'flex',
 									flexDirection: 'row',
-									gap: 10,
+									gap: 5,
 									padding: 4,
-									paddingLeft: 9.5,
-									marginLeft: -10,
+									paddingLeft: 10,
 									cursor: 'pointer',
 								}}
 							>
@@ -169,33 +172,20 @@ export default function PageWrapper(props: { children: ReactNode }) {
 									style={{
 										color: '#000000',
 										fontFamily: 'spB',
-										fontSize: 20,
-										marginTop: -1,
+										fontSize: 21,
+										marginTop: 5,
 									}}
 								>
 									flow
 								</Text>
 							</Pressable>
-							<Text
-								style={{
-									color: '#B8C2B9',
-									fontFamily: 'sp',
-									fontSize: 15,
-									marginTop: -1,
-									marginLeft: 0,
-									borderColor: '#B8C2B9',
-									borderBottomWidth: 1,
-									paddingBottom: 2,
-								}}
-							>
-								pool
-							</Text>
 							<View
 								style={[
 									{
 										flex: 1,
 										display: 'flex',
 										overflow: 'scroll',
+										paddingLeft: 10,
 									},
 									Platform.OS === 'web'
 										? {
@@ -211,6 +201,38 @@ export default function PageWrapper(props: { children: ReactNode }) {
 							>
 								<FileTree tree={fileTree} toggleDrawer={toggleDrawer} />
 							</View>
+							<Pressable
+								onPress={handleSettingsPress}
+								style={{
+									borderTopWidth: 1,
+									borderTopColor: '#B8C2B9',
+									alignItems: 'center',
+									display: 'flex',
+									flexDirection: 'row',
+									gap: 10,
+									padding: 8,
+									paddingLeft: 10,
+									cursor: 'pointer',
+									marginTop: 'auto',
+								}}
+							>
+								<FontAwesome
+									name='gear'
+									size={30}
+									color='#B8C2B9'
+									style={{ marginTop: 3 }}
+								/>
+								<Text
+									style={{
+										color: '#B8C2B9',
+										fontFamily: 'spB',
+										fontSize: 21,
+										marginTop: 4,
+									}}
+								>
+									settings
+								</Text>
+							</Pressable>
 						</View>
 						<Pressable
 							onPress={() => toggleDrawer(false)}
