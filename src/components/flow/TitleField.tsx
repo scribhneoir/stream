@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import {
 	type NativeSyntheticEvent,
 	Platform,
@@ -15,20 +15,28 @@ import Animated, {
 } from 'react-native-reanimated';
 import { useFileStorage } from '../../providers/FileStorage';
 
+const DAILY = '\udb84\udee1 daily';
+
 export const TitleField = (props: {
-	title: string;
-	setTitle: (title: string) => void;
 	setShowTitle: (show: boolean) => void;
-	handleSave: () => void;
+	handleSave: (title: string) => void;
 }) => {
-	const { title, setTitle, setShowTitle, handleSave } = props;
+	const { setShowTitle, handleSave } = props;
 	const { fileList, fsReady } = useFileStorage();
+	const [title, setTitle] = useState('');
 
 	const ref_title = useRef<TextInput>(null);
 
 	const handleTitleChange = (t: string) => {
 		const newTitle = t.replace(' ', '.').toLocaleLowerCase();
 		setTitle(newTitle);
+	};
+
+	const handleTitleSaveAndReset = (title?: string) => {
+		if (!title?.trim()) return;
+		handleSave(title);
+		setTitle('');
+		setShowTitle(false);
 	};
 
 	const handleTitleKeyPress = (
@@ -60,9 +68,9 @@ export const TitleField = (props: {
 		const depth = title.split('.').length;
 		const suggestions = fileList
 			.map((file) => file.split('.').slice(0, depth).join('.'))
-			.filter((file) => file.startsWith(title))
+			.filter((file) => file.startsWith(title) && !file.startsWith('daily'))
 			.slice(0, 5);
-		return new Array(...new Set(suggestions));
+		return [...(depth === 1 ? [DAILY] : []), ...new Set(suggestions)];
 	}, [fileList, fsReady, title]);
 
 	return (
@@ -80,8 +88,8 @@ export const TitleField = (props: {
 			style={{
 				display: 'flex',
 				alignItems: 'center',
-				justifyContent: 'center',
-				height: Platform.OS === 'web' ? '80%' : '100%',
+				justifyContent: 'flex-start',
+				height: Platform.OS === 'web' ? '50%' : '52%',
 				width: '100%',
 				maxWidth: 500,
 			}}
@@ -97,13 +105,22 @@ export const TitleField = (props: {
 					width: '100%',
 					maxWidth: 500,
 					zIndex: 1,
+					marginTop: 'auto',
 				}}
 			>
 				{titleSuggestions.length > 0 &&
-					titleSuggestions.reverse().map((suggestion, index) => (
+					titleSuggestions.reverse().map((suggestion) => (
 						<Pressable
 							key={suggestion}
-							onPress={() => setTitle(`${suggestion}.`)}
+							onPress={() => {
+								if (suggestion === DAILY) {
+									handleTitleSaveAndReset(
+										`daily.${new Date().getFullYear()}.${new Date().getMonth()}.${new Date().getDate()}`,
+									);
+								} else {
+									setTitle(`${suggestion}.`);
+								}
+							}}
 						>
 							<Text
 								style={[
@@ -117,8 +134,8 @@ export const TitleField = (props: {
 									Platform.OS === 'web'
 										? {
 												//web-only style props
-												// @ts-ignore
-												outlineStyle: 'none',
+												//@ts-ignore
+												outline: 'none',
 											}
 										: {},
 								]}
@@ -139,7 +156,7 @@ export const TitleField = (props: {
 					autoCorrect={false}
 					autoComplete='off'
 					spellCheck={false}
-					onSubmitEditing={handleSave}
+					onSubmitEditing={() => handleTitleSaveAndReset()}
 					style={[
 						{
 							backgroundColor: 'black',
@@ -152,7 +169,7 @@ export const TitleField = (props: {
 							? {
 									//web-only style props
 									// @ts-ignore
-									outlineStyle: 'none',
+									outline: 'none',
 								}
 							: {},
 					]}

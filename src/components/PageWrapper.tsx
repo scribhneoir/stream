@@ -74,7 +74,7 @@ export default function PageWrapper(props: { children: ReactNode }) {
 		toggleDrawer(false);
 	};
 
-	if (platform === PlatformEnum.WEB && !fsReady) {
+	if (platform !== PlatformEnum.DESKTOP && (!fsReady || !fontsLoaded)) {
 		return <Splash />;
 	}
 
@@ -154,14 +154,14 @@ export default function PageWrapper(props: { children: ReactNode }) {
 									flexDirection: 'row',
 									gap: 10,
 									padding: 4,
-									paddingLeft: 10,
+									paddingLeft: 9.5,
 									marginLeft: -10,
 									cursor: 'pointer',
 								}}
 							>
 								<FontAwesome
 									name='pencil-square-o'
-									size={24}
+									size={30}
 									color='black'
 									style={{ marginTop: 3 }}
 								/>

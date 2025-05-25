@@ -5,7 +5,6 @@ import { VeiledTextInput } from '../components/flow/VeiledTextInput';
 import { useFileStorage } from '../providers/FileStorage';
 
 export default function Flow() {
-	const [title, setTitle] = useState('');
 	const [text, setText] = useState('');
 	const [tags, setTags] = useState<string>('');
 	const [showTitle, setShowTitle] = useState(false);
@@ -13,7 +12,6 @@ export default function Flow() {
 	const { readFile, writeFile } = useFileStorage();
 
 	const handleStateReset = () => {
-		setTitle('');
 		setText('');
 		setTags('');
 		setShowTitle(false);
@@ -23,18 +21,16 @@ export default function Flow() {
 
 	//todo: title suggestions
 
-	const handleSave = async () => {
+	const handleSave = async (title: string) => {
 		if (!title.trim()) return;
-		const oldTitle = title;
 		const oldTags = tags;
 		const oldText = text.trim();
-		const titleArray = title.split('.');
 		handleStateReset();
 
 		try {
 			let data = await readFile(`${title}.md`);
 			if (!data.trim()) {
-				data = `---\ntitle: ${oldTitle.split('.').at(-1)}\ndate: ${new Date().toLocaleDateString()}\ndraft: true\ntags: ${oldTags.replaceAll(
+				data = `---\ntitle: ${title.split('.').at(-1)}\ndate: ${new Date().toLocaleDateString()}\ndraft: true\ntags: ${oldTags.replaceAll(
 					'#',
 					'\n  - ',
 				)}\n---\n`;
@@ -65,12 +61,7 @@ export default function Flow() {
 			}}
 		>
 			{showTitle && (
-				<TitleField
-					title={title}
-					setTitle={setTitle}
-					setShowTitle={setShowTitle}
-					handleSave={handleSave}
-				/>
+				<TitleField setShowTitle={setShowTitle} handleSave={handleSave} />
 			)}
 			{!showTitle && (
 				<VeiledTextInput
