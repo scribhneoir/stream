@@ -1,12 +1,12 @@
 import { type ReactNode, useEffect, useState } from 'react';
-import { Platform, Text } from 'react-native';
+import { Platform } from 'react-native';
 import {
 	PlatformContext,
 	type PlatformContextType,
 	PlatformEnum,
 } from './context';
 
-const FileStorageProvider = (props: { children: ReactNode }) => {
+const PlatformProvider = (props: { children: ReactNode }) => {
 	const { children } = props;
 	const [platformReady, setPlatformReady] = useState<boolean>(false);
 	const [platform, setPlatform] = useState<PlatformEnum>(PlatformEnum.WEB);
@@ -38,4 +38,4 @@ const FileStorageProvider = (props: { children: ReactNode }) => {
 		</PlatformContext.Provider>
 	);
 };
-export default FileStorageProvider;
+export default PlatformProvider;

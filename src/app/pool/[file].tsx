@@ -1,13 +1,21 @@
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useEffect, useRef, useState } from 'react';
-import { KeyboardAvoidingView, Platform, TextInput, View } from 'react-native';
+import {
+	Keyboard,
+	KeyboardAvoidingView,
+	Platform,
+	TextInput,
+	View,
+} from 'react-native';
 import { parse, stringify } from 'yaml';
 import { PoolTitle } from '../../components/pool/Title';
 import { useFileStorage } from '../../providers/FileStorage';
+import { PlatformEnum, usePlatform } from '../../providers/Platform';
 
 export default function Pool() {
 	const { file } = useLocalSearchParams();
 	const { readFile, writeFile } = useFileStorage();
+	const { platform } = usePlatform();
 	const [text, setText] = useState<string>('');
 	const [title, setTitle] = useState<string>('');
 	const [tags, setTags] = useState<string[]>([]);
@@ -103,7 +111,7 @@ export default function Pool() {
 
 	return (
 		<KeyboardAvoidingView
-			behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+			behavior={platform === PlatformEnum.IOS ? 'padding' : undefined}
 			style={{ flex: 1 }}
 		>
 			<View
@@ -115,7 +123,6 @@ export default function Pool() {
 						alignItems: 'center',
 						overflow: 'hidden',
 						justifyContent: 'flex-start',
-						paddingBottom: 10,
 						gap: 10,
 					},
 				]}

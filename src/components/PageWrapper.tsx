@@ -193,7 +193,7 @@ export default function PageWrapper(props: { children: ReactNode }) {
 												// @ts-ignore
 												scrollbarColor: '#B8C2B9 #111211',
 												'&::WebkitScrollbarColor': '#B8C2B9 #111211',
-												overflowY: 'scroll',
+												overflowY: 'auto',
 												overflowX: 'hidden',
 											}
 										: {},
@@ -243,7 +243,13 @@ export default function PageWrapper(props: { children: ReactNode }) {
 							}}
 						/>
 					</Animated.View>
-					<View style={{ padding: 10, height: '100%', width: '100%' }}>
+					<View
+						style={{
+							padding: 10,
+							height: '96%',
+							width: '100%',
+						}}
+					>
 						<FontAwesome
 							onPress={() => toggleDrawer(true)}
 							name='bars'

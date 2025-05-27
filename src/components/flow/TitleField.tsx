@@ -1,3 +1,4 @@
+import * as Haptics from 'expo-haptics';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import {
 	type NativeSyntheticEvent,
@@ -10,8 +11,8 @@ import {
 } from 'react-native';
 import Animated, {
 	FadeInDown,
-	FadeOutDown,
 	ReduceMotion,
+	ZoomOutUp,
 } from 'react-native-reanimated';
 import { useFileStorage } from '../../providers/FileStorage';
 
@@ -32,11 +33,12 @@ export const TitleField = (props: {
 		setTitle(newTitle);
 	};
 
-	const handleTitleSaveAndReset = (title?: string) => {
+	const handleTitleSaveAndReset = (title: string) => {
 		if (!title?.trim()) return;
-		handleSave(title);
 		setTitle('');
 		setShowTitle(false);
+		Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+		handleSave(title);
 	};
 
 	const handleTitleKeyPress = (
@@ -80,7 +82,7 @@ export const TitleField = (props: {
 				.damping(15)
 				.stiffness(100)
 				.reduceMotion(ReduceMotion.Never)}
-			exiting={FadeOutDown.springify()
+			exiting={ZoomOutUp.springify()
 				.mass(1)
 				.damping(15)
 				.stiffness(100)
@@ -156,7 +158,7 @@ export const TitleField = (props: {
 					autoCorrect={false}
 					autoComplete='off'
 					spellCheck={false}
-					onSubmitEditing={() => handleTitleSaveAndReset()}
+					onSubmitEditing={(e) => handleTitleSaveAndReset(e.nativeEvent.text)}
 					style={[
 						{
 							backgroundColor: 'black',
