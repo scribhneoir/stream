@@ -18,8 +18,6 @@ export function ScrollView(props: {
 					? {
 							//web-only style props
 							// @ts-ignore
-							scrollbarColor: '#B8C2B9 #000',
-							'&::WebkitScrollbarColor': '#B8C2B9 #000',
 							overflowY: 'auto',
 							overflowX: 'hidden',
 							padding: 10,
