@@ -1,2 +1,2 @@
-export { usePlatform, PlatformEnum } from './context';
-export { default as PlatformProvider } from './PlatformProvider';
+export { useSettings } from './context';
+export { default as PlatformProvider } from './SettingsProvider';

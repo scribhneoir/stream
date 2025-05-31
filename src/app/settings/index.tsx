@@ -1,13 +1,17 @@
+import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import { useState } from 'react';
-import { Button, Platform, Pressable, Switch, Text, View } from 'react-native';
+import { Pressable, Switch, View } from 'react-native';
 import { Accordion } from '../../components/elements/Accordion';
 import { ColorSelector } from '../../components/elements/ColorSelector';
+import { IconWrapper } from '../../components/elements/IconWrapper';
 import { ScrollView } from '../../components/elements/ScrollView';
+import { Text } from '../../components/elements/Text';
+import { useSettings } from '../../providers/Settings';
 
 export default function Settings() {
-	const [isEnabled, setIsEnabled] = useState(false);
-	const [selectedColor, setSelectedColor] = useState('#B8C2B9'); // Default color
-	const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
+	const { setAccentColor, accentColor, colors, setDarkMode, darkMode } =
+		useSettings();
+	const toggleSwitch = () => setDarkMode(!darkMode);
 
 	return (
 		<View
@@ -23,17 +27,9 @@ export default function Settings() {
 				gap: 10,
 			}}
 		>
-			<Text
-				style={{
-					color: '#B8C2B9',
-					fontFamily: 'spB',
-					fontSize: 21,
-				}}
-			>
-				settings
-			</Text>
+			<Text>settings</Text>
 			<ScrollView>
-				<Accordion title='appearance' icon='paint-brush'>
+				<Accordion title='appearance' icon='paintbrush'>
 					<View
 						style={{
 							display: 'flex',
@@ -43,33 +39,21 @@ export default function Settings() {
 							width: '100%',
 						}}
 					>
-						<Text
-							style={{
-								color: '#B8C2B9',
-								fontFamily: 'sp',
-								fontSize: 21,
-							}}
-						>
-							dark mode
-						</Text>
+						<IconWrapper icon='cloud-moon'>
+							<Text>dark mode</Text>
+						</IconWrapper>
 						<Switch
-							trackColor={{ false: '#3e3e3e', true: selectedColor }}
+							trackColor={{ false: '#777D77', true: accentColor }}
 							thumbColor='#B8C2B9'
 							//@ts-ignore
 							activeThumbColor='#B8C2B9'
 							onValueChange={toggleSwitch}
-							value={isEnabled}
+							value={darkMode}
 						/>
 					</View>
-					<Text
-						style={{
-							color: '#B8C2B9',
-							fontFamily: 'sp',
-							fontSize: 21,
-						}}
-					>
-						accent color
-					</Text>
+					<IconWrapper icon='rainbow'>
+						<Text>accent color</Text>
+					</IconWrapper>
 					<View
 						style={{
 							display: 'flex',
@@ -77,48 +61,21 @@ export default function Settings() {
 							alignItems: 'center',
 							justifyContent: 'space-between',
 							width: '100%',
+							marginTop: 10,
 						}}
 					>
-						<ColorSelector
-							color='#e66374' // Example color
-							setColor={setSelectedColor}
-							selectedColor={selectedColor} // Change to true if this color is selected
-						/>
-						<ColorSelector
-							color='#e0ac63' // Example color
-							setColor={setSelectedColor}
-							selectedColor={selectedColor}
-						/>
-						<ColorSelector
-							color='#6d946f' // Example color
-							setColor={setSelectedColor}
-							selectedColor={selectedColor}
-						/>
-						<ColorSelector
-							color='#65929d' // Example color
-							setColor={setSelectedColor}
-							selectedColor={selectedColor}
-						/>
-						<ColorSelector
-							color='#9477a3' // Example color
-							setColor={setSelectedColor}
-							selectedColor={selectedColor}
-						/>
-						<ColorSelector
-							color='#B8C2B9' // Example color
-							setColor={setSelectedColor}
-							selectedColor={selectedColor}
-						/>
+						{colors.map((color) => (
+							<ColorSelector
+								key={color}
+								color={color}
+								setColor={setAccentColor}
+								selected={accentColor === color}
+							/>
+						))}
 					</View>
 				</Accordion>
 				<Accordion title='daily' icon='calendar'>
-					<Text
-						style={{
-							color: '#B8C2B9',
-							fontFamily: 'sp',
-							fontSize: 21,
-						}}
-					>
+					<Text>
 						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
 						eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
 						ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
@@ -136,15 +93,7 @@ export default function Settings() {
 					</Text>
 				</Accordion>
 				<Accordion title='publish' icon='paper-plane'>
-					<Text
-						style={{
-							color: '#B8C2B9',
-							fontFamily: 'sp',
-							fontSize: 21,
-						}}
-					>
-						Feature coming soon! Stay tuned for updates.
-					</Text>
+					<Text>Feature coming soon! Stay tuned for updates.</Text>
 				</Accordion>
 			</ScrollView>
 			<View>
@@ -157,27 +106,10 @@ export default function Settings() {
 							borderRadius: 10,
 						}}
 					>
-						<Text
-							style={{
-								color: '#B8C2B9',
-								fontFamily: 'sp',
-								fontSize: 20,
-							}}
-						>
-							feedback
-						</Text>
+						<Text>feedback</Text>
 					</Pressable>
 				</View>
-				<Text
-					style={{
-						color: '#B8C2B9',
-						fontFamily: 'sp',
-						fontSize: 14,
-						textAlign: 'center',
-					}}
-				>
-					stream v0.1.0 | developed by scribhneoir
-				</Text>
+				<Text>stream v0.1.0 | developed by scribhneoir</Text>
 			</View>
 		</View>
 	);

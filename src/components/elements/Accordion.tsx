@@ -1,12 +1,14 @@
-import { FontAwesome } from '@expo/vector-icons';
+import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import { type ReactNode, useState } from 'react';
-import { Pressable, Text, View } from 'react-native';
+import { Pressable, View } from 'react-native';
 import Animated, {
 	useAnimatedStyle,
 	useDerivedValue,
 	useSharedValue,
 	withTiming,
 } from 'react-native-reanimated';
+import { IconWrapper } from './IconWrapper';
+import { Text } from './Text';
 
 function AccordionItem(props: {
 	isExpanded: boolean;
@@ -33,7 +35,7 @@ function AccordionItem(props: {
 				{
 					width: '100%',
 					overflow: 'hidden',
-					borderBottomColor: '#353835',
+					borderBottomColor: '#777D77',
 					borderBottomWidth: 2,
 				},
 				bodyStyle,
@@ -53,6 +55,8 @@ function AccordionItem(props: {
 				<View
 					style={{
 						width: '100%',
+						paddingHorizontal: 20,
+						paddingTop: 10,
 						paddingBottom: 15,
 					}}
 				>
@@ -66,10 +70,10 @@ function AccordionItem(props: {
 export function Accordion(props: {
 	title: string;
 	children: ReactNode;
-	icon?: React.ComponentProps<typeof FontAwesome>['name'];
+	icon?: React.ComponentProps<typeof FontAwesome6>['name'];
 	duration?: number;
 }) {
-	const { children, title, duration = 500 } = props;
+	const { children, title, icon, duration = 500 } = props;
 	const [isExpanded, setIsExpanded] = useState(false);
 
 	const rotation = useDerivedValue(() =>
@@ -90,30 +94,22 @@ export function Accordion(props: {
 					flexDirection: 'row',
 					alignItems: 'center',
 					justifyContent: 'space-between',
+
+					paddingTop: 3,
+					paddingBottom: 5,
+					paddingLeft: 2,
 				}}
 				onPress={() => setIsExpanded(!isExpanded)}
 			>
-				<View
-					style={{
-						display: 'flex',
-						flexDirection: 'row',
-						alignItems: 'center',
-						gap: 10,
-					}}
-				>
-					{props.icon && (
-						<FontAwesome name={props.icon} size={15} color='#B8C2B9' />
-					)}
-					<Text style={{ color: '#B8C2B9', fontFamily: 'sp', fontSize: 20 }}>
-						{title}
-					</Text>
-				</View>
+				<IconWrapper icon={props.icon ?? 'circle'}>
+					<Text>{title}</Text>
+				</IconWrapper>
 				<Animated.View style={rotationStyle}>
-					<FontAwesome
+					<FontAwesome6
 						name='angle-right'
-						size={20}
-						color='#B8C2B9'
-						style={{ marginTop: 3, cursor: 'pointer' }}
+						size={18}
+						color='#777D77'
+						style={{ cursor: 'pointer' }}
 					/>
 				</Animated.View>
 			</Pressable>

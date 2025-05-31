@@ -1,7 +1,14 @@
 import { createContext, useContext } from 'react';
 
-// biome-ignore lint/complexity/noBannedTypes: not implemented yet
-export type SettingsContextType = {};
+export type SettingsContextType = {
+	darkMode: boolean;
+	setDarkMode: (value: boolean) => void;
+	accentColor: string;
+	setAccentColor: (value: string) => void;
+	colors: string[];
+	primaryColor: string;
+	backgroundColor: string;
+};
 
 export const SettingsContext = createContext<SettingsContextType | null>(null);
 

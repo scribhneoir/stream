@@ -1,8 +1,9 @@
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
-import { Pressable, Text } from 'react-native';
+import { Pressable } from 'react-native';
 import type { Tree, TreeNode } from '../helpers/file.tree';
 import { PlatformEnum, usePlatform } from '../providers/Platform';
+import { Text } from './elements/Text';
 
 export default function FileTree(props: {
 	tree: Tree;
@@ -57,16 +58,14 @@ function TreeItem(props: {
 			: 15;
 
 	return (
-		<Pressable onPress={() => handlePress(item)}>
-			<Text
-				style={{
-					color: '#B8C2B9',
-					fontFamily: 'sp',
-					fontSize: size,
-					marginTop: -1,
-					marginLeft: index ? index * 20 : 0,
-				}}
-			>
+		<Pressable
+			onPress={() => handlePress(item)}
+			style={{
+				marginTop: -1,
+				marginLeft: index ? index * 20 : 0,
+			}}
+		>
+			<Text>
 				{Object.keys(item.children).length
 					? collapsed
 						? '\udb80\ude4b '

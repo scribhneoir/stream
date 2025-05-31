@@ -127,7 +127,6 @@ export const TitleField = (props: {
 							<Text
 								style={[
 									{
-										backgroundColor: 'black',
 										fontFamily: 'spI',
 										width: '100%',
 										color: '#353835',
@@ -161,7 +160,6 @@ export const TitleField = (props: {
 					onSubmitEditing={(e) => handleTitleSaveAndReset(e.nativeEvent.text)}
 					style={[
 						{
-							backgroundColor: 'black',
 							fontFamily: 'spB',
 							width: '100%',
 							color: '#B8C2B9',

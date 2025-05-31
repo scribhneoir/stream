@@ -12,6 +12,7 @@ import Animated, {
 	ReduceMotion,
 	FadeOutUp,
 } from 'react-native-reanimated';
+import { useSettings } from '../../providers/Settings';
 
 export const VeiledTextInput = (props: {
 	text: string;
@@ -21,6 +22,7 @@ export const VeiledTextInput = (props: {
 	setShowTitle: (show: boolean) => void;
 }) => {
 	const { text, tags, setText, setTags, setShowTitle } = props;
+	const { backgroundColor, primaryColor } = useSettings();
 
 	const [enterCount, setEnterCount] = useState(0);
 	const [tagInit, setTagInit] = useState(false);
@@ -118,7 +120,7 @@ export const VeiledTextInput = (props: {
 				onSubmitEditing={() => ref_text.current?.focus()}
 				style={[
 					{
-						backgroundColor: 'black',
+						backgroundColor: backgroundColor,
 						fontFamily: 'spB',
 						width: '100%',
 						color: '#353835',
@@ -171,7 +173,7 @@ export const VeiledTextInput = (props: {
 							width: '100%',
 							position: 'absolute',
 							bottom: '50%',
-							color: '#B8C2B9',
+							color: primaryColor,
 							fontSize: 18,
 							verticalAlign: 'bottom',
 						},
@@ -186,7 +188,7 @@ export const VeiledTextInput = (props: {
 					]}
 				/>
 				<LinearGradient
-					colors={['black', 'transparent']}
+					colors={[backgroundColor, 'transparent']}
 					locations={[0.5, 1]}
 					style={{
 						width: '100%',

@@ -1,18 +1,21 @@
 import { Pressable, View } from 'react-native';
+import { useSettings } from '../../providers/Settings';
 
 export const ColorSelector = (props: {
 	color: string;
 	setColor: (color: string) => void;
-	selectedColor: string;
+	selected: boolean;
 }) => {
-	const { color, setColor, selectedColor } = props;
-	const selected = selectedColor === color;
+	const { color, setColor, selected } = props;
+	const { backgroundColor } = useSettings();
+
 	return (
 		<Pressable
 			style={{
-				borderWidth: selected ? 2 : 0,
+				borderWidth: selected ? 4 : 0,
 				borderColor: color,
 				borderRadius: 100,
+				marginHorizontal: -6,
 			}}
 			onPress={() => setColor(color)}
 		>
@@ -22,6 +25,7 @@ export const ColorSelector = (props: {
 					height: selected ? 45 : 50,
 					backgroundColor: color, // Example color
 					borderRadius: 100,
+					borderColor: backgroundColor,
 					borderWidth: 4,
 				}}
 			/>

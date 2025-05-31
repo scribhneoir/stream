@@ -1,9 +1,9 @@
-import { FontAwesome } from '@expo/vector-icons';
+import { FontAwesome, FontAwesome6 } from '@expo/vector-icons';
 import { useFonts } from 'expo-font';
 import { useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { type ReactNode, useState } from 'react';
-import { Image, Keyboard, Platform, Pressable, Text, View } from 'react-native';
+import { Image, Keyboard, Platform, Pressable, View } from 'react-native';
 import Animated, {
 	LinearTransition,
 	ReduceMotion,
@@ -17,13 +17,17 @@ import Animated, {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useFileStorage } from '../providers/FileStorage';
 import { PlatformEnum, usePlatform } from '../providers/Platform';
+import { useSettings } from '../providers/Settings';
 import FileTree from './FileTree';
 import Splash from './Splash';
+import { IconWrapper } from './elements/IconWrapper';
+import { Text } from './elements/Text';
 
 export default function PageWrapper(props: { children: ReactNode }) {
 	const { children } = props;
 	const { platform } = usePlatform();
 	const { fileTree, fsReady } = useFileStorage();
+	const { backgroundColor, accentColor, darkMode } = useSettings();
 	const [fontsLoaded] = useFonts({
 		sp: require('../../assets/fonts/SpaceMono/SpaceMono-Regular.ttf'),
 		spB: require('../../assets/fonts/SpaceMono/SpaceMono-Bold.ttf'),
@@ -84,7 +88,13 @@ export default function PageWrapper(props: { children: ReactNode }) {
 	}
 
 	return (
-		<View style={{ backgroundColor: 'black', height: '100%', width: '100%' }}>
+		<View
+			style={{
+				backgroundColor,
+				height: '100%',
+				width: '100%',
+			}}
+		>
 			<SafeAreaView
 				style={{ position: 'relative', height: '100%', width: '100%' }}
 			>
@@ -105,8 +115,6 @@ export default function PageWrapper(props: { children: ReactNode }) {
 								height: '100%',
 								width,
 								overflow: 'hidden',
-								borderTopRightRadius: 10,
-								borderBottomRightRadius: 10,
 							},
 						]}
 					>
@@ -115,10 +123,10 @@ export default function PageWrapper(props: { children: ReactNode }) {
 								borderTopRightRadius: 10,
 								borderBottomRightRadius: 10,
 								height: '100%',
-								paddingTop: 10,
+								paddingTop: 6,
 								width: 300,
 								gap: 8,
-								backgroundColor: '#111211',
+								backgroundColor: darkMode ? '#111211' : backgroundColor,
 								overflow: 'hidden',
 								display: 'flex',
 							}}
@@ -132,11 +140,11 @@ export default function PageWrapper(props: { children: ReactNode }) {
 									paddingLeft: 10,
 								}}
 							>
-								<FontAwesome
+								<FontAwesome6
 									onPress={() => toggleDrawer(!drawerOpen)}
 									name='bars'
 									size={25}
-									color='#B8C2B9'
+									color={accentColor}
 									style={{ marginTop: 3, cursor: 'pointer' }}
 								/>
 								<Image
@@ -152,7 +160,7 @@ export default function PageWrapper(props: { children: ReactNode }) {
 							<Pressable
 								onPress={handleStreamPress}
 								style={{
-									backgroundColor: '#B8C2B9',
+									backgroundColor: accentColor,
 									alignItems: 'center',
 									display: 'flex',
 									flexDirection: 'row',
@@ -162,22 +170,9 @@ export default function PageWrapper(props: { children: ReactNode }) {
 									cursor: 'pointer',
 								}}
 							>
-								<FontAwesome
-									name='pencil-square-o'
-									size={30}
-									color='black'
-									style={{ marginTop: 3 }}
-								/>
-								<Text
-									style={{
-										color: '#000000',
-										fontFamily: 'spB',
-										fontSize: 21,
-										marginTop: 5,
-									}}
-								>
-									flow
-								</Text>
+								<IconWrapper icon='edit' invert>
+									<Text invert>flow</Text>
+								</IconWrapper>
 							</Pressable>
 							<View
 								style={[
@@ -191,8 +186,6 @@ export default function PageWrapper(props: { children: ReactNode }) {
 										? {
 												//web-only style props
 												// @ts-ignore
-												scrollbarColor: '#B8C2B9 #111211',
-												'&::WebkitScrollbarColor': '#B8C2B9 #111211',
 												overflowY: 'auto',
 												overflowX: 'hidden',
 											}
@@ -216,30 +209,19 @@ export default function PageWrapper(props: { children: ReactNode }) {
 									marginTop: 'auto',
 								}}
 							>
-								<FontAwesome
-									name='gear'
-									size={30}
-									color='#B8C2B9'
-									style={{ marginTop: 3 }}
-								/>
-								<Text
-									style={{
-										color: '#B8C2B9',
-										fontFamily: 'spB',
-										fontSize: 21,
-										marginTop: 4,
-									}}
-								>
-									settings
-								</Text>
+								<IconWrapper icon='gear'>
+									<Text>settings</Text>
+								</IconWrapper>
 							</Pressable>
 						</View>
 						<Pressable
 							onPress={() => toggleDrawer(false)}
 							style={{
+								position: 'absolute',
+								zIndex: -1,
 								width: '100%',
 								height: '100%',
-								backgroundColor: '#00000088',
+								backgroundColor: darkMode ? '#00000080' : '#777D7780',
 							}}
 						/>
 					</Animated.View>
@@ -250,12 +232,12 @@ export default function PageWrapper(props: { children: ReactNode }) {
 							width: '100%',
 						}}
 					>
-						<FontAwesome
+						<FontAwesome6
 							onPress={() => toggleDrawer(true)}
 							name='bars'
 							size={25}
-							color='#B8C2B9'
-							style={{ marginTop: 3 }}
+							color={accentColor}
+							style={{ marginTop: -1 }}
 						/>
 						{children}
 					</View>
