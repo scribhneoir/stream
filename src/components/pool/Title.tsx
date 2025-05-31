@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
 import { Platform, Pressable, Text, TextInput } from 'react-native';
+import { useSettings } from '../../providers/Settings';
 
 export const PoolTitle = (props: {
 	title: string;
@@ -7,6 +8,7 @@ export const PoolTitle = (props: {
 	onBlur: () => void;
 }) => {
 	const { title, setTitle, onBlur } = props;
+	const { accentColor } = useSettings();
 	const titleRef = useRef<TextInput>(null);
 	const [edit, setEdit] = useState(false);
 
@@ -60,7 +62,7 @@ export const PoolTitle = (props: {
 					style={[
 						{
 							fontFamily: 'sp',
-							color: '#B8C2B9',
+							color: accentColor,
 							fontSize: 25,
 							paddingTop: 0,
 							paddingBottom: 0,
@@ -81,7 +83,7 @@ export const PoolTitle = (props: {
 					style={[
 						{
 							fontFamily: 'sp',
-							color: '#B8C2B9',
+							color: accentColor,
 							fontSize: 25,
 							paddingTop: 0,
 							paddingBottom: 0,

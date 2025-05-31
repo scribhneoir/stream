@@ -2,6 +2,7 @@ import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import { useState } from 'react';
 import { Pressable, Switch, View } from 'react-native';
 import { Accordion } from '../../components/elements/Accordion';
+import { Button } from '../../components/elements/Button';
 import { ColorSelector } from '../../components/elements/ColorSelector';
 import { IconWrapper } from '../../components/elements/IconWrapper';
 import { ScrollView } from '../../components/elements/ScrollView';
@@ -97,17 +98,18 @@ export default function Settings() {
 				</Accordion>
 			</ScrollView>
 			<View>
-				<View>
-					<Pressable
-						style={{
-							borderColor: '#B8C2B9',
-							borderWidth: 1,
-							padding: 10,
-							borderRadius: 10,
-						}}
-					>
-						<Text>feedback</Text>
-					</Pressable>
+				<View
+					style={{
+						display: 'flex',
+						flexDirection: 'row',
+						gap: 10,
+						marginVertical: 10,
+					}}
+				>
+					<Button onPress={() => window.location.reload()}>feedback</Button>
+					<Button primary onPress={() => window.location.reload()}>
+						support
+					</Button>
 				</View>
 				<Text>stream v0.1.0 | developed by scribhneoir</Text>
 			</View>

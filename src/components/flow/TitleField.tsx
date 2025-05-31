@@ -4,7 +4,6 @@ import {
 	type NativeSyntheticEvent,
 	Platform,
 	Pressable,
-	Text,
 	TextInput,
 	type TextInputKeyPressEventData,
 	View,
@@ -15,6 +14,8 @@ import Animated, {
 	ZoomOutUp,
 } from 'react-native-reanimated';
 import { useFileStorage } from '../../providers/FileStorage';
+import { useSettings } from '../../providers/Settings';
+import { Text } from '../elements/Text';
 
 const DAILY = '\udb84\udee1 daily';
 
@@ -24,6 +25,7 @@ export const TitleField = (props: {
 }) => {
 	const { setShowTitle, handleSave } = props;
 	const { fileList, fsReady } = useFileStorage();
+	const { accentColor, primaryColor } = useSettings();
 	const [title, setTitle] = useState('');
 
 	const ref_title = useRef<TextInput>(null);
@@ -100,7 +102,7 @@ export const TitleField = (props: {
 				style={{
 					borderRadius: 10,
 					borderWidth: 2,
-					borderColor: '#353835',
+					borderColor: accentColor,
 					overflow: 'hidden',
 					paddingHorizontal: 7,
 					paddingVertical: 5,
@@ -124,23 +126,7 @@ export const TitleField = (props: {
 								}
 							}}
 						>
-							<Text
-								style={[
-									{
-										fontFamily: 'spI',
-										width: '100%',
-										color: '#353835',
-										fontSize: 23,
-									},
-									Platform.OS === 'web'
-										? {
-												//web-only style props
-												//@ts-ignore
-												outline: 'none',
-											}
-										: {},
-								]}
-							>
+							<Text accent italic>
 								{suggestion}
 							</Text>
 						</Pressable>
@@ -152,7 +138,7 @@ export const TitleField = (props: {
 					onKeyPress={(e) => handleTitleKeyPress(e)}
 					onChangeText={(t) => handleTitleChange(t)}
 					placeholder='title your work...'
-					placeholderTextColor='#353835'
+					placeholderTextColor={accentColor}
 					enterKeyHint='done'
 					autoCorrect={false}
 					autoComplete='off'
@@ -162,7 +148,7 @@ export const TitleField = (props: {
 						{
 							fontFamily: 'spB',
 							width: '100%',
-							color: '#B8C2B9',
+							color: accentColor,
 							fontSize: 25,
 						},
 						Platform.OS === 'web'

@@ -11,10 +11,12 @@ import { parse, stringify } from 'yaml';
 import { PoolTitle } from '../../components/pool/Title';
 import { useFileStorage } from '../../providers/FileStorage';
 import { PlatformEnum, usePlatform } from '../../providers/Platform';
+import { useSettings } from '../../providers/Settings';
 
 export default function Pool() {
 	const { file } = useLocalSearchParams();
 	const { readFile, writeFile } = useFileStorage();
+	const { primaryColor } = useSettings();
 	const { platform } = usePlatform();
 	const [text, setText] = useState<string>('');
 	const [title, setTitle] = useState<string>('');
@@ -136,8 +138,6 @@ export default function Pool() {
 					onChangeText={handleChange}
 					keyboardAppearance='dark'
 					multiline
-					showsHorizontalScrollIndicator={false}
-					showsVerticalScrollIndicator={false}
 					autoCorrect={false}
 					autoComplete='off'
 					spellCheck={false}
@@ -147,7 +147,7 @@ export default function Pool() {
 							width: '100%',
 							height: '100%',
 							maxWidth: 500,
-							color: '#B8C2B9',
+							color: primaryColor,
 							fontSize: 18,
 							verticalAlign: 'bottom',
 							paddingTop: 0,
@@ -156,8 +156,8 @@ export default function Pool() {
 						Platform.OS === 'web'
 							? {
 									//web-only style props
-									// @ts-ignore
-									scrollbarColor: ' #111211 #000000',
+									//@ts-ignore
+									outline: 'none',
 								}
 							: {},
 					]}

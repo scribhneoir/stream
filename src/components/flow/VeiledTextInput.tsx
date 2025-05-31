@@ -22,7 +22,7 @@ export const VeiledTextInput = (props: {
 	setShowTitle: (show: boolean) => void;
 }) => {
 	const { text, tags, setText, setTags, setShowTitle } = props;
-	const { backgroundColor, primaryColor } = useSettings();
+	const { backgroundColor, primaryColor, accentColor } = useSettings();
 
 	const [enterCount, setEnterCount] = useState(0);
 	const [tagInit, setTagInit] = useState(false);
@@ -123,7 +123,7 @@ export const VeiledTextInput = (props: {
 						backgroundColor: backgroundColor,
 						fontFamily: 'spB',
 						width: '100%',
-						color: '#353835',
+						color: accentColor,
 						fontSize: 14,
 					},
 					Platform.OS === 'web'
@@ -160,7 +160,7 @@ export const VeiledTextInput = (props: {
 					autoComplete='off'
 					spellCheck={false}
 					placeholder='Write something...'
-					placeholderTextColor='#353835'
+					placeholderTextColor={accentColor}
 					ref={ref_text}
 					onKeyPress={(e) => handleTextKeyPress(e)}
 					onChange={(e) => {

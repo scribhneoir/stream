@@ -168,6 +168,7 @@ export default function PageWrapper(props: { children: ReactNode }) {
 									padding: 4,
 									paddingLeft: 10,
 									cursor: 'pointer',
+									pointerEvents: 'box-only',
 								}}
 							>
 								<IconWrapper icon='edit' invert>
@@ -180,7 +181,7 @@ export default function PageWrapper(props: { children: ReactNode }) {
 										flex: 1,
 										display: 'flex',
 										overflow: 'scroll',
-										paddingLeft: 10,
+										marginLeft: -12,
 									},
 									Platform.OS === 'web'
 										? {

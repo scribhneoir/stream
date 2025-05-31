@@ -2,16 +2,16 @@ import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { Pressable } from 'react-native';
 import type { Tree, TreeNode } from '../helpers/file.tree';
-import { PlatformEnum, usePlatform } from '../providers/Platform';
+import { usePlatform } from '../providers/Platform';
+import { IconWrapper } from './elements/IconWrapper';
 import { Text } from './elements/Text';
 
 export default function FileTree(props: {
 	tree: Tree;
 	toggleDrawer: (open: boolean) => void;
 	path?: string;
-	index?: number;
 }) {
-	const { index, tree, toggleDrawer, path = '' } = props;
+	const { tree, toggleDrawer, path = '' } = props;
 
 	return (
 		<>
@@ -20,7 +20,6 @@ export default function FileTree(props: {
 					key={key}
 					name={key}
 					item={tree[key]}
-					index={index}
 					path={path}
 					toggleDrawer={toggleDrawer}
 				/>
@@ -32,11 +31,10 @@ export default function FileTree(props: {
 function TreeItem(props: {
 	name: string;
 	item: TreeNode;
-	index?: number;
 	path: string;
 	toggleDrawer: (open: boolean) => void;
 }) {
-	const { name, item, index, path, toggleDrawer } = props;
+	const { name, item, path, toggleDrawer } = props;
 	const router = useRouter();
 	const { platform } = usePlatform();
 	const [collapsed, setCollapsed] = useState(true);
@@ -52,35 +50,34 @@ function TreeItem(props: {
 		}
 	};
 
-	const size =
-		platform === PlatformEnum.ANDROID || platform === PlatformEnum.IOS
-			? 20
-			: 15;
-
 	return (
 		<Pressable
 			onPress={() => handlePress(item)}
 			style={{
 				marginTop: -1,
-				marginLeft: index ? index * 20 : 0,
+				paddingLeft: 24,
 			}}
 		>
-			<Text>
-				{Object.keys(item.children).length
-					? collapsed
-						? '\udb80\ude4b '
-						: '\udb81\udf70 '
-					: '\uf15b '}
-				{item.fileName
-					? name.replace(path, '')
+			<IconWrapper
+				icon={
+					Object.keys(item.children).length
+						? collapsed
+							? 'folder'
+							: 'folder-open'
+						: 'file'
+				}
+			>
+				<Text accent={!name.replace(path, '')} bold={!name.replace(path, '')}>
+					{item.fileName
 						? name.replace(path, '')
-						: 'index'
-					: name}
-			</Text>
+							? name.replace(path, '')
+							: 'index'
+						: name}
+				</Text>
+			</IconWrapper>
 			{!collapsed && Object.keys(item.children).length > 0 && (
 				<FileTree
 					tree={item.children}
-					index={index ? index + 1 : 1}
 					toggleDrawer={toggleDrawer}
 					path={props.path ? `${props.path}.${name}` : name}
 				/>
