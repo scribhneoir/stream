@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useCallback, useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { TitleField } from '../components/flow/TitleField';
 import { VeiledTextInput } from '../components/flow/VeiledTextInput';
@@ -18,6 +19,24 @@ export default function Flow() {
 	};
 
 	//todo: async storage for title and current note
+	const saveText = useCallback(async (text: string) => {
+		await AsyncStorage.setItem('text', text);
+	}, []);
+
+	const loadText = useCallback(async () => {
+		const text = await AsyncStorage.getItem('text');
+		if (text) {
+			setText(text);
+		}
+	}, []);
+
+	useEffect(() => {
+		loadText();
+	}, [loadText]);
+
+	useEffect(() => {
+		saveText(text);
+	}, [text, saveText]);
 
 	//todo: title suggestions
 
