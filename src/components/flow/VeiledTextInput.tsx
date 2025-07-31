@@ -188,7 +188,7 @@ export const VeiledTextInput = (props: {
 					]}
 				/>
 				<LinearGradient
-					colors={[backgroundColor, 'transparent']}
+					colors={[backgroundColor, `${backgroundColor}00`]}
 					locations={[0.5, 1]}
 					style={{
 						width: '100%',
