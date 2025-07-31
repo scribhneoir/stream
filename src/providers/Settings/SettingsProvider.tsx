@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
 	type ReactNode,
 	useCallback,
@@ -25,6 +26,22 @@ const SettingsProvider = (props: { children: ReactNode }) => {
 		[primaryColor],
 	);
 
+	const loadSettings = useCallback(async () => {
+		const darkMode = await AsyncStorage.getItem('darkMode');
+		const accentColor = await AsyncStorage.getItem('accentColor');
+		setDarkMode(darkMode === 'true');
+		setAccentColor(accentColor ?? '#b8c2b9');
+	}, []);
+
+	const saveSettings = useCallback(async () => {
+		await AsyncStorage.setItem('darkMode', darkMode.toString());
+		await AsyncStorage.setItem('accentColor', accentColor);
+	}, [darkMode, accentColor]);
+
+	useEffect(() => {
+		loadSettings();
+	}, [loadSettings]);
+
 	useEffect(() => {
 		if (
 			(!darkMode && accentColor === '#b8c2b9') ||
@@ -32,7 +49,8 @@ const SettingsProvider = (props: { children: ReactNode }) => {
 		) {
 			setAccentColor(primaryColor); // Reset to default if it matches primary color
 		}
-	}, [darkMode, primaryColor, accentColor]);
+		saveSettings();
+	}, [darkMode, primaryColor, accentColor, saveSettings]);
 
 	const wrapped: SettingsContextType = {
 		darkMode,
